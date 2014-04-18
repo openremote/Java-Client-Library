@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+OpenRemote, the Home of the Digital Home.
+Copyright 2008-2014, OpenRemote Inc.
+
+See the contributors.txt file in the distribution for a
+full listing of individual contributors.
+
+This is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 3.0 of
+the License, or (at your option) any later version.
+
+This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+You should have received a copy of the GNU General Public
+License along with this software; if not, write to the Free
+Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+<!--
+ |  Build file for OpenRemote Entities
+ |
+ |  Author: Richard Turner
+ +-->
+<project name="OpenRemote Entities" default="jar" basedir=".">
+
+	<property file = "build.properties"/>
+
+	<!-- Some base dir used -->
+	<property name="project.name" value="orentities" />
+	<property name="lib.dir" value="lib" />
+	<property name="src.dir" value="src"/>
+	<property name="test.dir" value="test"/>
+	<property name="build.dir" value="bin"/>
+	<property name="output.dir" value="output"/>
+	<property name="jar.name" value="${project.name}-${version}.jar"/>
+	
+	<path id="project.class.path">
+		<pathelement location="${build.dir}"/>
+		<pathelement location="${lib.dir}/jackson/jackson-annotations-2.3.2.jar"/>
+		<pathelement location="${lib.dir}/jackson/jackson-core-2.3.2.jar"/>
+		<pathelement location="${lib.dir}/jackson/jackson-databind-2.3.2.jar"/>
+	</path>
+	
+	<target name="clean" description="deletes all generated files">
+		<echo message="--------------------------------------------------------------------" />
+		<echo message=" Clean..." />
+		<echo message="--------------------------------------------------------------------" />
+		<echo message="" />
+		<delete dir="${build.dir}"/>
+		<delete dir="${output.dir}"/>
+	</target>
+  
+	<target name="init" depends="clean">
+		<echo message="--------------------------------------------------------------------" />
+		<echo message=" Initialising..." />
+		<echo message="--------------------------------------------------------------------" />
+		<echo message="" />
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${output.dir}"/>
+		<copy todir="${build.dir}">
+            <fileset dir="${src.dir}">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+		</copy>
+	</target>
+  
+	<target name="javac" depends="init" description="Compile java source">
+		<echo message="--------------------------------------------------------------------" />
+		<echo message=" Compiling Java classes..." />
+		<echo message="--------------------------------------------------------------------" />
+		<echo message="" />
+		<javac failonerror="true" srcdir="${src.dir}" destdir="${build.dir}" source="1.6" target="1.6" nowarn="true" debug="true" debuglevel="lines,vars,source">
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+  
+	<target name="jar" depends="javac" description="Create a jar file">
+		<echo message="--------------------------------------------------------------------" />
+		<echo message=" Packing jar..." />
+		<echo message="--------------------------------------------------------------------" />
+		<echo message="" />
+		<jar destfile="${output.dir}/${jar.name}" basedir="${build.dir}" />
+	</target>
+</project>

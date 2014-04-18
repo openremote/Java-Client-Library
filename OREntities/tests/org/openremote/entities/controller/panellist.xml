@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openremote xmlns="http://www.openremote.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:schemaLocation="http://www.openremote.org/panel.xsd">
+  <panel id="485" name="Mobii" />
+  <panel id="1606" name="Razberry" />
+  <panel id="2227" name="PC" />
+</openremote>
