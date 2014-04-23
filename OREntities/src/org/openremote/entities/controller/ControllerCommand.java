@@ -18,19 +18,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openremote.entitites.controller;
-
-import java.util.List;
+package org.openremote.entities.controller;
 
 /**
- * Provides list of sensor status information
+ * List of Supported Controller Commands
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
  */
-public class SensorStatusList {
-  List<SensorStatus> status;
-  
-  public List<SensorStatus> getStatuses() {
-    return status;
-  }
+public enum ControllerCommand {
+	GET_PANEL_LIST,
+	GET_PANEL_LAYOUT,
+	SEND_COMMAND,
+	GET_SENSOR_STATUS,
+	DO_SENSOR_POLLING,
+	GET_ROUND_ROBIN_LIST,
+	IS_ALIVE,
+	IS_SECURE,
+	LOGOUT
 }

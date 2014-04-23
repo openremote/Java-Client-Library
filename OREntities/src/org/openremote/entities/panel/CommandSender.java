@@ -20,7 +20,7 @@
  */
 package org.openremote.entities.panel;
 
-import org.openremote.entitites.controller.AsyncControllerCallback;
+import org.openremote.entities.controller.AsyncControllerCallback;
 
 /**
  * Interface for components that can send commands to the controller

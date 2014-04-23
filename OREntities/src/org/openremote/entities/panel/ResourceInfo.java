@@ -22,8 +22,8 @@ package org.openremote.entities.panel;
 
 import java.util.Date;
 
-import org.openremote.entitites.controller.AsyncControllerCallback;
-import org.openremote.entitites.controller.ControllerResponseCode;
+import org.openremote.entities.controller.AsyncControllerCallback;
+import org.openremote.entities.controller.ControllerResponseCode;
 
 /**
  * This is a storage container for information about a named resource; depending on resource

@@ -23,8 +23,8 @@ package org.openremote.entities.panel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import org.openremote.entitites.controller.AsyncControllerCallback;
-import org.openremote.entitites.controller.ControllerResponseCode;
+import org.openremote.entities.controller.AsyncControllerCallback;
+import org.openremote.entities.controller.ControllerResponseCode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

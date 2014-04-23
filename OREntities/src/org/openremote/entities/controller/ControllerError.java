@@ -18,24 +18,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openremote.entitites.controller;
-
-import java.util.List;
-
-import org.openremote.entities.panel.PanelInfo;
+package org.openremote.entities.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Contains information about panels available on a controller
+ * Used for marshalling to/from JSON
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
  */
-public class PanelInfoList {
-  @JsonProperty("panel")
-  private List<PanelInfo> panelInfos;
+class Response {
+  @JsonProperty
+  String message;
+  @JsonProperty
+  int code;
+}
+
+public class ControllerError {
+  @JsonProperty("error")
+  private Response response;
   
-  public List<PanelInfo> getPanelInfos() {
-    return panelInfos;
+  public ControllerResponseCode getResponse() {
+    return ControllerResponseCode.getResponseCode(response.code);
   }
 }

@@ -20,7 +20,7 @@
  */
 package org.openremote.entities.panel;
 
-import org.openremote.entitites.controller.AsyncControllerCallback;
+import org.openremote.entities.controller.AsyncControllerCallback;
 
 /**
  * This interface defines the contract for retrieving resources from the controller; an instance is plugged into

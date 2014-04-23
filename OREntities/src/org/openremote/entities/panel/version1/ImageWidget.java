@@ -23,10 +23,10 @@ package org.openremote.entities.panel.version1;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openremote.entities.controller.AsyncControllerCallback;
+import org.openremote.entities.controller.ControllerResponseCode;
 import org.openremote.entities.panel.ResourceInfo;
 import org.openremote.entities.panel.ResourceLocator;
-import org.openremote.entitites.controller.AsyncControllerCallback;
-import org.openremote.entitites.controller.ControllerResponseCode;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -20,7 +20,7 @@
  */
 package org.openremote.entities.panel;
 
-import org.openremote.entitites.controller.ControllerResponseCode;
+import org.openremote.entities.controller.ControllerResponseCode;
 
 /**
  * Response object encapsulating resource data for a particular resource

@@ -18,21 +18,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openremote.entitites.controller;
+package org.openremote.entities.controller;
 
 /**
- * List of Supported Controller Commands
+ * Interface defining all asynchronous callbacks
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
+ * @param <T>
  */
-public enum ControllerCommand {
-	GET_PANEL_LIST,
-	GET_PANEL_LAYOUT,
-	SEND_COMMAND,
-	GET_SENSOR_STATUS,
-	DO_SENSOR_POLLING,
-	GET_ROUND_ROBIN_LIST,
-	IS_ALIVE,
-	IS_SECURE,
-	LOGOUT
+public interface AsyncControllerCallback<T> {
+  void onFailure(ControllerResponseCode error);
+  
+  void onSuccess(T result);
 }

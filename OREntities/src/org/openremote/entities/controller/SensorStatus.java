@@ -18,16 +18,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openremote.entitites.controller;
+package org.openremote.entities.controller;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Interface defining all asynchronous callbacks
+ * Provides status information for a sensor
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
- * @param <T>
  */
-public interface AsyncControllerCallback<T> {
-  void onFailure(ControllerResponseCode error);
+public class SensorStatus {
+  private int id;
+  @JsonProperty("content")
+  private String value;
   
-  void onSuccess(T result);
+  public int getSensorId() {
+    return id;
+  }
+  
+  public String getValue() {
+    return value;
+  }
 }

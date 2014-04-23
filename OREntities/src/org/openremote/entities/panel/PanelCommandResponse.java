@@ -20,7 +20,7 @@
  */
 package org.openremote.entities.panel;
 
-import org.openremote.entitites.controller.ControllerResponseCode;
+import org.openremote.entities.controller.ControllerResponseCode;
 
 /**
  * Response object received from the controller after sending a command

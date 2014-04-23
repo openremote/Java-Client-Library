@@ -20,11 +20,11 @@
  */
 package org.openremote.entities.panel.version1;
 
+import org.openremote.entities.controller.AsyncControllerCallback;
+import org.openremote.entities.controller.ControllerResponseCode;
 import org.openremote.entities.panel.ResourceConsumerImpl;
 import org.openremote.entities.panel.ResourceInfo;
 import org.openremote.entities.panel.ResourceLocator;
-import org.openremote.entitites.controller.AsyncControllerCallback;
-import org.openremote.entitites.controller.ControllerResponseCode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
