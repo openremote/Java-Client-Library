@@ -6,6 +6,6 @@
 	<classpathentry kind="lib" path="lib/jackson/jackson-annotations-2.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/jackson/jackson-core-2.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/jackson/jackson-databind-2.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/junit/junit-4.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/junit/junit-4.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
