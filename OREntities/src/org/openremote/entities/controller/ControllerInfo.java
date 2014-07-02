@@ -32,7 +32,7 @@ public final class ControllerInfo {
   private String name;
   @JsonProperty("version")
   private String version;
-  @JsonProperty("controllerUrl")
+  @JsonProperty("controllerURL")
   private String url;
   @JsonProperty("controllerIdentity")
   private String identity;
@@ -51,6 +51,9 @@ public final class ControllerInfo {
 
   void setIdentity(String identity) {
     this.identity = identity;
+  }
+  
+  ControllerInfo() {
   }
 
   public ControllerInfo(String url) {
@@ -75,7 +78,7 @@ public final class ControllerInfo {
     return url;
   }
   
-  String getIdentity() {
+  public String getIdentity() {
     return identity;
   }
 }
