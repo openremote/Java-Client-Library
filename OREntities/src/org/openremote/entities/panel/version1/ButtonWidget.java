@@ -34,9 +34,11 @@ import org.openremote.entities.panel.ResourceLocator;
 import org.openremote.entities.panel.ValueSetFailureHandler;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * Button widget that sends a command on press (behaves differently depending
@@ -110,7 +112,7 @@ public class ButtonWidget extends Widget implements CommandWidget {
   @JsonIgnore
   private State state;
   @JsonIgnore
-  private Type buttonType;
+  private Type buttonType = Type.SHORTPRESS;
   @JsonIgnore
   private CommandSender commandSender;
   @JsonIgnore
@@ -141,6 +143,43 @@ public class ButtonWidget extends Widget implements CommandWidget {
     onStateChanged(state == State.PRESSED);   
   }
 
+  @JsonSetter("repeat")
+  public void setIsRepeater(boolean isRepeater) {
+    switch (getButtonType()) {
+    case LONGPRESS:
+      if (isRepeater) {
+        setButtonType(Type.LONGPRESS_REPEATER); 
+      }
+      break;
+    case LONGPRESS_REPEATER:
+      if (!isRepeater) {
+        setButtonType(Type.LONGPRESS);
+      }
+      break;
+    case SHORTPRESS:
+      if (isRepeater) {
+        setButtonType(Type.SHORTPRESS_REPEATER);
+      }
+      break;
+    case SHORTPRESS_REPEATER:
+      if (!isRepeater) {
+        setButtonType(Type.SHORTPRESS);
+      }
+      break;
+    default:
+      break;    
+    }
+  }
+  
+  public void setButtonType(Type buttonType) {
+    if (this.buttonType == buttonType) {
+      return;
+    }
+    Type oldValue = this.buttonType;
+    this.buttonType = buttonType;
+    raisePropertyChanged("buttonType", oldValue, buttonType);
+  }
+  
   public State getState() {
     return state;
   }
@@ -201,7 +240,7 @@ public class ButtonWidget extends Widget implements CommandWidget {
     return buttonType;
   }
 
-  // HELPERS  
+  @JsonGetter("repeat")
   private boolean isRepeater() {
     return buttonType == Type.LONGPRESS_REPEATER || buttonType == Type.SHORTPRESS_REPEATER;
   }
