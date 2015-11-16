@@ -41,7 +41,11 @@ public abstract class SensoryWidget extends Widget {
   private List<SensorLink> sensorLinks;
   
   public List<SensorLink> getSensorLinks() {
-    return sensorLinks != null ? sensorLinks : new ArrayList<SensorLink>();
+    if (sensorLinks == null) {
+      sensorLinks = new ArrayList<SensorLink>();
+    }
+    
+    return sensorLinks;
   }
   
   /**

@@ -20,8 +20,11 @@
  */
 package org.openremote.entities.panel.version1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.openremote.entities.controller.AsyncControllerCallback;
 import org.openremote.entities.controller.ControllerResponseCode;
@@ -43,12 +46,14 @@ public class ImageWidget extends SensoryWidget {
   @JsonBackReference("cell-image")
   CellLayout parentCell;
   @JsonIgnore
-  private Map<String, ResourceInfo> images = new HashMap<String, ResourceInfo>();
+  private Map<String, ResourceInfo> images;
   private String src;
   @JsonIgnore
-  private String currentImageSrc;
+  private String currentImageName;
   @JsonIgnore
   private ResourceInfo currentImage;
+  @JsonIgnore
+  private ResourceInfo defaultImage;
   @JsonIgnore
   LabelWidget linkedLabel;
   @JsonProperty("include")
@@ -57,23 +62,62 @@ public class ImageWidget extends SensoryWidget {
   boolean linkedLabelChecked;
   @JsonIgnore
   private ResourceLocator resourceLocator;
+  private static final String DEFAULT_KEY = "@*%#DEFAULT@*%#";
+  
+  private Map<String, ResourceInfo> getImageMap() {
+    if (images == null) {
+      images = new HashMap<String, ResourceInfo>();
+      if (src != null && !src.isEmpty()) {
+        images.put(DEFAULT_KEY, new ResourceInfo(src, this));
+      }
+      
+      for (SensorLink link : getSensorLinks()) {
+        for (StateMap map : link.getStates()) {
+          images.put(map.getName(), new ResourceInfo(map.getValue(), this));
+        }
+      }
+    }
+       
+    return images;
+  }
   
   public ResourceInfo getCurrentImage() {
+    if (currentImage == null) {
+      if (getCurrentImageName() != null && !getCurrentImageName().isEmpty()) {
+        currentImage = getImageFromMap(getCurrentImageName());
+      }
+      
+      if (currentImage == null) {
+        currentImage = getImageFromMap(src);
+      }
+    }    
+    
     return currentImage;
   }
   
-  private String getCurrentImageSrc() {
-    return currentImageSrc != null ? currentImageSrc : src;  
+  private ResourceInfo getImageFromMap(String imageName) {
+    for(ResourceInfo imageResource : getImageMap().values()) {
+      if (imageResource.getName().equalsIgnoreCase(imageName)) {
+        return imageResource;
+      }
+    }
+    
+    return null;
   }
   
-  private void setCurrentImageSrc(String imageSrc) {
-    if (getCurrentImageSrc().equals(imageSrc)) {
+  private String getCurrentImageName() {
+    return currentImageName;  
+  }
+  
+  private void setCurrentImageName(String imageName) {
+    if (!getCurrentImageName().equals(imageName)) {
       return;
     }
     
-    currentImageSrc = imageSrc;
-    
-    resolveResource(imageSrc);
+    currentImageName = imageName;
+    ResourceInfo oldImage = currentImage;
+    currentImage = null;
+    raisePropertyChanged("currentImage", oldImage, getCurrentImage());
   }
   
   public LabelWidget getLinkedLabel() {
@@ -99,72 +143,22 @@ public class ImageWidget extends SensoryWidget {
     }
     return linkedLabel;
   }
-  
-  private void setCurrentImage(ResourceInfo image) {
-    if (this.currentImage == image) {
-      return;
-    }
     
-    ResourceInfo oldValue = this.currentImage;
-    this.currentImage = image;
-    raisePropertyChanged("currentImage", oldValue, image);
-  }
-  
-  private void resolveResource(final String resourceName) {
-    if (images.containsKey(resourceName)) {
-      setCurrentImage(images.get(resourceName));
-      return;
-    }
-    
-    resolveResource(resourceName, false, new AsyncControllerCallback<ResourceInfo>() {
-      @Override
-      public void onSuccess(ResourceInfo result) {
-        if (getCurrentImageSrc().equals(resourceName)) {
-          setCurrentImage(result);
-        }
-      }
-      
-      @Override
-      public void onFailure(ControllerResponseCode error) {
-        if (getCurrentImageSrc().equalsIgnoreCase(resourceName)) {
-          setCurrentImage(null);
-        }
-      }
-    });
-  }
-
   @Override
   public void onSensorValueChanged(int sensorId, String value) {
-    // Change image to match sensor value if sensor link set
     StateMap matchedMap = getStateMap(sensorId, value); 
-    setCurrentImageSrc(matchedMap != null ? matchedMap.getValue() : src);
+    setCurrentImageName(matchedMap != null ? matchedMap.getValue() : null);
   }
 
   @Override
-  protected void OnResourceLocatorChanged(ResourceLocator resourceLocator) {
-    // Try and resolve the current image
-    resolveResource(getCurrentImageSrc());    
+  public List<ResourceInfo> getResources() {
+    return new ArrayList<ResourceInfo>(getImageMap().values());
   }
 
-//  @Override
-//  protected String[] getAllResourceNames() {
-//    List<String> names = new ArrayList<String>();
-//    names.add(src);
-//    
-//    // Iterate through the state map and extract images
-//    List<SensorLink> links = getSensorLinks();
-//    SensorLink link = null;
-//    
-//    if (links != null && links.size() > 0) {
-//      link = links.get(0);
-//    }
-//    
-//    if (link != null) {
-//      for (StateMap map : link.getStates()) {
-//        names.add(map.getValue());
-//      }
-//    }
-//    
-//    return names.toArray(new String[0]);
-//  }
+  @Override
+  public void onResourceChanged(String name) {
+    if (currentImage != null && currentImage.getName().equals(name)) {
+      raisePropertyChanged("currentImage", currentImage, currentImage);
+    }
+  }
 }

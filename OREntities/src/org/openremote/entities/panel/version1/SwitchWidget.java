@@ -20,6 +20,9 @@
  */
 package org.openremote.entities.panel.version1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openremote.entities.controller.AsyncControllerCallback;
 import org.openremote.entities.controller.ControllerResponseCode;
 import org.openremote.entities.panel.CommandSender;
@@ -61,21 +64,19 @@ public class SwitchWidget extends SensoryWidget implements CommandWidget {
   private String onImageName;
   
   public ResourceInfo getOffImage() {
+    String imageName = getOffImageName();
+    if (imageName != null && !imageName.isEmpty() && offImage == null) {
+      offImage = new ResourceInfo(imageName, this);
+    }
     return offImage;
   }
 
-  private void setOffImage(ResourceInfo offImage) {
-    this.offImage = offImage;
-    raisePropertyChanged("offImage", null, offImage);
-  }
-
   public ResourceInfo getOnImage() {
+    String imageName = getOnImageName();
+    if (imageName != null && !imageName.isEmpty() && onImage == null) {
+      onImage = new ResourceInfo(imageName, this);
+    }
     return onImage;
-  }
-
-  private void setOnImage(ResourceInfo onImage) {
-    this.onImage = onImage;
-    raisePropertyChanged("onImage", null, onImage);
   }
 
   private String getOffImageName() {
@@ -167,39 +168,23 @@ public class SwitchWidget extends SensoryWidget implements CommandWidget {
   }
 
   @Override
-  protected void OnResourceLocatorChanged(ResourceLocator resourceLocator) {
-    // Get on and off images
-    if (getOnImageName() != null && !getOnImageName().isEmpty()) {
-      resolveResource(getOnImageName(), false, new AsyncControllerCallback<ResourceInfo>() {
-        @Override
-        public void onSuccess(ResourceInfo result) {
-          setOnImage(result);
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          setOnImage(null);
-        }
-      });
+  public List<ResourceInfo> getResources() {
+    List<ResourceInfo> images = new ArrayList<ResourceInfo>();
+    if (getOnImage() != null) {
+      images.add(getOnImage());
     }
-    
-    if (getOffImageName() != null && !getOffImageName().isEmpty()) {
-      resolveResource( getOffImageName(), false, new AsyncControllerCallback<ResourceInfo>() {
-        @Override
-        public void onSuccess(ResourceInfo result) {
-          setOffImage(result);
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          setOffImage(null);
-        }
-      });
+    if (getOffImage() != null) {
+      images.add(getOffImage());
     }
+    return images;
   }
 
-//  @Override
-//  protected String[] getAllResourceNames() {
-//    return new String[] { getOnImageName(), getOffImageName() };
-//  }
+  @Override
+  public void onResourceChanged(String name) {
+    if (name.equals(getOnImageName())) {
+      raisePropertyChanged("onImage", onImage, onImage);
+    } else if (name.equals(getOffImageName())) {
+      raisePropertyChanged("offImage", offImage, offImage);
+    }
+  }
 }

@@ -30,9 +30,7 @@ import org.openremote.entities.controller.AsyncControllerCallback;
  *
  */
 public interface ResourceLocator {
-  public void getResource(String resourceName, boolean getData, AsyncControllerCallback<ResourceInfo> resourceCallback);
-  
-  //public void getResources(String[] resourceName, boolean getData, AsyncControllerCallback<ResourceInfo[]> resourceCallback);
-  
   public void getResourceData(String resourceName, AsyncControllerCallback<ResourceDataResponse> resourceDataCallback);
+  
+  public void getResourceInfoDetails(String resourceName, AsyncControllerCallback<ResourceInfoDetails> resourceCallback);
 }

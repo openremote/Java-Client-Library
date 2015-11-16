@@ -20,29 +20,14 @@
  */
 package org.openremote.entities.panel;
 
+import java.util.List;
+
 /**
  * Simple interface for defining a resource consumer (i.e. a panel component
  * that requires images)
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
  */
-public interface ResourceConsumer extends NotifyPropertyChanged {
-  public void setResourceLocator(ResourceLocator resourceLocator);
-  
-//  /**
-//   * Gets a resource info for each resource that could be used by this
-//   * resource consumer; optionally force load of the resource data rather
-//   * than use lazy loading
-//   * @return
-//   */
-//  public void getAllResourceInfos(boolean loadData, AsyncControllerCallback<ResourceInfo[]> callback);
-  
-//  /**
-//   * Gets a resource info for a particular resource used by this
-//   * resource consumer; optionally force load of the resource data rather
-//   * than use lazy loading
-//   * @param loadData
-//   * @param callback
-//   */
-//  public void getResourceInfo(boolean loadData, AsyncControllerCallback<ResourceInfo> callback);
+public interface ResourceConsumer extends ResourceChangedCallback {
+  public List<ResourceInfo> getResources();
 }

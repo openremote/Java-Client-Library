@@ -41,6 +41,8 @@ public class AbsoluteLayout extends Layout implements WidgetContainer {
   private ImageWidget image;
   private LabelWidget label;
   private SliderWidget slider;
+  @JsonProperty("colorpicker")
+  private ColorPickerWidget colorPicker;
   @JsonProperty("switch")
   private SwitchWidget switchWidget;
   private WebViewWidget web;
@@ -63,6 +65,9 @@ public class AbsoluteLayout extends Layout implements WidgetContainer {
     }
     if (web != null) {
       return web;
+    }
+    if (colorPicker != null) {
+      return colorPicker;
     }
     return null;
   }

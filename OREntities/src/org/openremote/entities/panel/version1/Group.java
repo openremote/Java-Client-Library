@@ -26,6 +26,7 @@ import java.util.List;
 import org.openremote.entities.panel.version1.TabBar;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -42,9 +43,10 @@ public class Group {
   @JsonManagedReference("group-screeninclude")
   @JsonProperty("include")
   private List<ScreenInclude> screenIncludes;
-  @JsonManagedReference("group-screen")
+  @JsonIgnore
   private List<Screen> screens;
   @JsonManagedReference("group-tabbar")
+  @JsonProperty("tabbar")
   private TabBar tabBar;
  
   public String getName() {
@@ -58,6 +60,7 @@ public class Group {
         int ref = include.screenRef;
         for (Screen screen : parentGroupList.parentPanel.getScreens()) {
           if (screen.id == ref) {
+            screen.parentGroup = this;
             screens.add(screen);
           }
         }

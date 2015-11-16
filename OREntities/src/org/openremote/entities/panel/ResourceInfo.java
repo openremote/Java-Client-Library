@@ -34,41 +34,46 @@ import org.openremote.entities.controller.ControllerResponseCode;
  *
  */
 public class ResourceInfo {
+  private ResourceInfoDetails details;
   private ResourceLocator locator;
   private String name;
-  private Date modifiedTime;
-  private String contentType;
   private byte[] data;
-
-  public ResourceInfo(ResourceLocator locator, String name, Date modifiedTime, String contentType) {
-    this(locator, name, modifiedTime, contentType, null);
-  }
+  private ResourceChangedCallback changedCallback;
   
-  public ResourceInfo(ResourceLocator locator, String name, Date modifiedTime, String contentType, byte[] data) {
+  public ResourceInfo(String name, ResourceChangedCallback changedCallback) {
+    this(null, name, changedCallback);
+  }
+    
+  public ResourceInfo(ResourceLocator locator, String name, ResourceChangedCallback changedCallback) {
     this.locator = locator;
     this.name = name;
-    this.modifiedTime = modifiedTime;
-    this.contentType = contentType;
-    this.data = data;
+    this.changedCallback = changedCallback;
   }
   
   public String getName() {
     return name;
   }
 
-  public Date getModifiedTime() {
-    return modifiedTime;
+  public void getDetails(final AsyncControllerCallback<ResourceInfoDetails> callback) {
+    if (details != null) {
+      callback.onSuccess(details);
+      return;
+    }
+    
+    if (locator == null) {
+      callback.onFailure(ControllerResponseCode.RESOURCE_LOCATOR_NULL);
+      return;
+    }
+    
+    // Try and get the resource from the locator
+    locator.getResourceInfoDetails(name, callback);
   }
   
   public boolean isDataLoaded() {
     return data != null;
   }
   
-  public String getContentType() {
-    return contentType;
-  }  
-  
-  public void getResourceData(final AsyncControllerCallback<ResourceDataResponse> callback) {
+  public void getData(final AsyncControllerCallback<ResourceDataResponse> callback) {
     if (data != null) {
       callback.onSuccess(new ResourceDataResponse(name, data, ControllerResponseCode.OK));
       return;
@@ -82,4 +87,15 @@ public class ResourceInfo {
     // Try and get the resource from the locator
     locator.getResourceData(name, callback);
   }
+  
+  /*
+   * Mechanism for pushing resource locator resolver into each resource
+   */
+  public void setResourceLocator(ResourceLocator locator) {
+    this.locator = locator;
+    details = null;
+    data = null;
+    changedCallback.onResourceChanged(getName());
+  }
+  
 }

@@ -22,6 +22,7 @@ package org.openremote.entities.panel.version1;
 
 import java.util.List;
 
+import org.openremote.entities.panel.ResourceInfo;
 import org.openremote.entities.panel.ResourceLocator;
 /**
  * The label can set font size and color, and text can be linked to a sensor
@@ -80,11 +81,11 @@ public class LabelWidget extends SensoryWidget {
   }
 
   @Override
-  protected void OnResourceLocatorChanged(ResourceLocator resourceLocator) {
+  public List<ResourceInfo> getResources() {
+    return null;
   }
 
-//  @Override
-//  protected String[] getAllResourceNames() {
-//    return null;
-//  }
+  @Override
+  public void onResourceChanged(String name) {
+  }
 }

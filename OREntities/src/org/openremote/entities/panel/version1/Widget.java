@@ -20,7 +20,13 @@
  */
 package org.openremote.entities.panel.version1;
 
-import org.openremote.entities.panel.ResourceConsumerImpl;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+import org.openremote.entities.panel.NotifyPropertyChanged;
+import org.openremote.entities.panel.ResourceConsumer;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Base class for all widgets. All widget properties are read-only (although not
@@ -30,9 +36,25 @@ import org.openremote.entities.panel.ResourceConsumerImpl;
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
  */
-public abstract class Widget extends ResourceConsumerImpl {
+public abstract class Widget implements ResourceConsumer, NotifyPropertyChanged {
   protected int id;
   protected String name;
+  @JsonIgnore
+  private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+  
+  protected void raisePropertyChanged(String propertyName, Object oldValue, Object newValue) {
+    pcs.firePropertyChange(propertyName, oldValue, newValue);
+  }
+  
+  @Override
+  public void addPropertyChangeListener(PropertyChangeListener listener) {
+    pcs.addPropertyChangeListener(listener);
+  }
+
+  @Override
+  public void removePropertyChangeListener(PropertyChangeListener listener) {
+    pcs.removePropertyChangeListener(listener);
+  }
   
   public String getName() {
     return name;

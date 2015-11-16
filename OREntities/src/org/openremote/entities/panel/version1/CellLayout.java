@@ -45,6 +45,8 @@ public class CellLayout implements WidgetContainer {
   @JsonProperty("switch")
   private SwitchWidget switchWidget;
   private WebViewWidget web;
+  @JsonProperty("colorpicker")
+  private ColorPickerWidget colorPicker;
   private int x;
   private int y;
   @JsonProperty("rowspan")
@@ -86,6 +88,9 @@ public class CellLayout implements WidgetContainer {
     }
     if (web != null) {
       return web;
+    }
+    if (colorPicker != null) {
+      return colorPicker;
     }
     return null;
   }

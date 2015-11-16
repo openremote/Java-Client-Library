@@ -23,6 +23,7 @@ package org.openremote.entities.panel.version1;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -38,8 +39,8 @@ public class Navigation {
     BACK("back"),
     LOGIN("login"),
     LOGOUT("logout"),
-    NEXT("next"),
-    PREVIOUS("previous");
+    NEXT("nextScreen"),
+    PREVIOUS("previousScreen");
  
     private final String value;
     
@@ -52,9 +53,10 @@ public class Navigation {
       return value;
     }
 
-    public static SystemScreenType fromValue(String v) {
+    @JsonCreator
+    public static SystemScreenType fromString(String v) {
         for (SystemScreenType c: SystemScreenType.values()) {
-            if (c.value.equals(v)) {
+            if (c.value.equalsIgnoreCase(v)) {
                 return c;
             }
         }

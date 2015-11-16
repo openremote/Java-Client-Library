@@ -22,6 +22,7 @@ package org.openremote.entities.panel.version1;
 
 import java.util.List;
 
+import org.openremote.entities.panel.ResourceInfo;
 import org.openremote.entities.panel.ResourceLocator;
 
 /**
@@ -71,14 +72,13 @@ public class WebViewWidget extends SensoryWidget {
     setSrc(val);
   }
 
-
   @Override
-  protected void OnResourceLocatorChanged(ResourceLocator resourceLocator) {
+  public List<ResourceInfo> getResources() {
+    return null;
   }
 
 
-//  @Override
-//  protected String[] getAllResourceNames() {
-//    return null;
-//  }
+  @Override
+  public void onResourceChanged(String name) {
+  }
 }

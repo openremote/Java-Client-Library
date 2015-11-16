@@ -23,6 +23,8 @@ package org.openremote.entities.panel.version1;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openremote.entities.panel.ResourceConsumer;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -56,6 +58,7 @@ public final class Panel {
   public List<Widget> getWidgets() {
     return getWidgets(new Class[] {Widget.class});
   }
+  
   public List<Widget> getWidgets(Class<?>[] widgetTypes) {
     List<Widget> widgets = new ArrayList<Widget>();
     for (Screen screen : screenList.screens) {
@@ -63,6 +66,24 @@ public final class Panel {
     }
     
     return widgets;
+  }
+  
+  public List<ResourceConsumer> getResourceConsumers() {
+    List<ResourceConsumer> consumers = new ArrayList<ResourceConsumer>();
+    for (Screen screen : getScreens()) {
+      if (screen.getBackground() != null) {
+        consumers.add(screen.getBackground());
+      }
+    }
+    if (getTabBar() != null) {
+      for (TabBarItem item : getTabBar().getItems()) {
+        consumers.add(item);
+      }
+    }
+    for (Widget widget : getWidgets()) {
+      consumers.add(widget);
+    }
+    return consumers;
   }
   
   @SuppressWarnings("unchecked")

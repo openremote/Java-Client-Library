@@ -26,6 +26,7 @@ import java.util.List;
 import org.openremote.entities.panel.version1.ScreenBackground;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 /**
@@ -52,6 +53,8 @@ public class Screen {
   private ScreenBackground background;
   private Integer inverseScreenId;
   private Boolean landscape;
+  @JsonIgnore
+  private Screen inverseScreen;
   
   public String getName() {
     return name;
@@ -122,11 +125,20 @@ public class Screen {
     return background;
   }
   
-  public int getInverseScreenId() {
-    return inverseScreenId;
+  public boolean isLandscape() {
+    return landscape != null && landscape.booleanValue();
   }
   
-  public boolean getLandscape() {
-    return landscape;
+  public Screen getInverseScreen() {
+    if (inverseScreenId != null && parentGroup != null && inverseScreen == null) {
+      for (Screen screen : parentGroup.getScreens()) {
+        if (inverseScreenId.equals(screen.id)) {
+          inverseScreen = screen;
+          break;
+        }
+      }
+    }
+    
+    return inverseScreen;
   }
 }

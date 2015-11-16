@@ -20,6 +20,9 @@
  */
 package org.openremote.entities.panel.version1;
 
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -201,31 +204,21 @@ public class ButtonWidget extends Widget implements CommandWidget {
   }
   
   public ResourceInfo getDefaultImage() {
+    String imageName = getDefaultImageName();
+    if (imageName != null && !imageName.isEmpty() && defaultImage == null) {
+      defaultImage = new ResourceInfo(imageName, this);
+    }
+    
     return defaultImage;
   }
-  
-  private void setDefaultImage(ResourceInfo defaultImage) {
-    if (this.defaultImage == defaultImage) {
-      return;
-    }
-    ResourceInfo oldValue = this.defaultImage;
     
-    this.defaultImage = defaultImage;
-    raisePropertyChanged("defaultImage", oldValue, defaultImage);
-  }
-  
-  private void setPressedImage(ResourceInfo pressedImage) {
-    if (this.pressedImage == pressedImage) {
-      return;
-    }
-    ResourceInfo oldValue = this.pressedImage;
-    
-    this.pressedImage = pressedImage;
-    raisePropertyChanged("pressedImage", oldValue, pressedImage);
-  }
-  
   public ResourceInfo getPressedImage() {
-    return pressedImage;
+    String imageName = getPressedImageName();
+    if (imageName != null && !imageName.isEmpty() && pressedImage == null) {
+      pressedImage = new ResourceInfo(imageName, this);
+    }
+    
+    return defaultImage;
   }
   
   public int getRepeatDelay() {
@@ -311,43 +304,26 @@ public class ButtonWidget extends Widget implements CommandWidget {
   }
 
   @Override
-  protected void OnResourceLocatorChanged(ResourceLocator resourceLocator) {
-    String defaultImage = getDefaultImageName();
-    if (defaultImage != null && !defaultImage.isEmpty()) {
-      resolveResource(defaultImage, false, new AsyncControllerCallback<ResourceInfo>() {
-        @Override
-        public void onSuccess(ResourceInfo result) {
-          setDefaultImage(result);
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          setDefaultImage(null);
-        }
-      });
+  public List<ResourceInfo> getResources() {
+    List<ResourceInfo> resources = new ArrayList<ResourceInfo>();
+    
+    if (getDefaultImage() != null) {
+      resources.add(getDefaultImage());
     }
     
-    String pressedImage = getPressedImageName();
-    if (pressedImage != null && !pressedImage.isEmpty()) {
-      resolveResource(pressedImage, false, new AsyncControllerCallback<ResourceInfo>() {
-        @Override
-        public void onSuccess(ResourceInfo result) {
-          setPressedImage(result);
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          setPressedImage(null);
-        }
-      });
+    if (getPressedImage() != null) {
+      resources.add(getPressedImage());
     }
+    
+    return resources;
   }
 
-//  @Override
-//  protected String[] getAllResourceNames() {
-//    return new String[] {
-//            getDefaultImageName(),
-//            getPressedImageName()
-//    };
-//  }
+  @Override
+  public void onResourceChanged(String name) {
+    if (name.equals(getDefaultImageName())) {
+      raisePropertyChanged("defaultImage", defaultImage, defaultImage);
+    } else if (name.equals(getPressedImage())) {
+      raisePropertyChanged("pressedImage", pressedImage, pressedImage);
+    }
+  }
 }

@@ -20,6 +20,9 @@
  */
 package org.openremote.entities.panel.version1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openremote.entities.controller.AsyncControllerCallback;
 import org.openremote.entities.controller.ControllerResponseCode;
 import org.openremote.entities.panel.CommandSender;
@@ -161,22 +164,42 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
   }
   
   public ResourceInfo getThumbImage() {
+    String imageName = getThumbImageName();
+    if (imageName != null && !imageName.isEmpty() && thumbImage == null) {
+      thumbImage = new ResourceInfo(imageName, this);
+    }
     return thumbImage;
   }
   
   public ResourceInfo getMinImage() {
+    String imageName = getMinImageName();
+    if (imageName != null && !imageName.isEmpty() && minImage == null) {
+      minImage = new ResourceInfo(imageName, this);
+    }
     return minImage;
   }
   
-  public ResourceInfo getMaxImageData() {
+  public ResourceInfo getMaxImage() {
+    String imageName = getMaxImageName();
+    if (imageName != null && !imageName.isEmpty() && maxImage == null) {
+      maxImage = new ResourceInfo(imageName, this);
+    }
     return maxImage;
   }
   
   public ResourceInfo getMinTrackImage() {
+    String imageName = getMinTrackImageName();
+    if (imageName != null && !imageName.isEmpty() && minTrackImage == null) {
+      minTrackImage = new ResourceInfo(imageName, this);
+    }
     return minTrackImage;
   }
   
   public ResourceInfo getMaxTrackImage() {
+    String imageName = getMaxTrackImageName();
+    if (imageName != null && !imageName.isEmpty() && maxTrackImage == null) {
+      maxTrackImage = new ResourceInfo(imageName, this);
+    }
     return maxTrackImage;
   }
   
@@ -194,31 +217,6 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
   
   public boolean isPassive() {
     return passive;
-  }
-
-  private void setThumbImage(ResourceInfo data) {
-    this.thumbImage = data;
-    raisePropertyChanged("thumbImage", null, data);
-  }
-  
-  private void setMinImage(ResourceInfo data) {
-    this.minImage = data;
-    raisePropertyChanged("minImage", null, data);
-  }
-  
-  private void setMaxImage(ResourceInfo data) {
-    this.maxImage = data;
-    raisePropertyChanged("maxImage", null, data);
-  }
-  
-  private void setMinTrackImage(ResourceInfo data) {
-    this.minTrackImage = data;
-    raisePropertyChanged("minTrackImage", null, data);
-  }
-  
-  private void setMaxTrackImage(ResourceInfo data) {
-    this.maxTrackImage = data;
-    raisePropertyChanged("maxTrackImage", null, data);
   }
   
   @Override
@@ -247,80 +245,38 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
   }
 
   @Override
-  protected void OnResourceLocatorChanged(ResourceLocator resourceLocator) {
-    // Try and resolve any images that have been set
-    if (thumbImageName != null && !thumbImageName.isEmpty()) {
-      resolveResource(thumbImageName, false, new AsyncControllerCallback<ResourceInfo>() {
-        @Override
-        public void onSuccess(ResourceInfo result) {
-          setThumbImage(result);
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          setThumbImage(null);
-        }
-      });
+  public List<ResourceInfo> getResources() {
+    List<ResourceInfo> images = new ArrayList<ResourceInfo>();
+    if (getThumbImage() != null) {
+      images.add(getThumbImage());
     }
-    
-    String minImage = getMinImageName();    
-    if (minImage != null && !minImage.isEmpty()) {
-      resolveResource(minImage, false, new AsyncControllerCallback<ResourceInfo>() {
-        @Override
-        public void onSuccess(ResourceInfo result) {
-          setMinImage(result);
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          setMinImage(null);
-        }
-      });
+    if (getMaxTrackImage() != null) {
+      images.add(getMaxTrackImage());
     }
-    
-    String maxImage = getMaxImageName();    
-    if (maxImage != null && !maxImage.isEmpty()) {
-      resolveResource(maxImage, false, new AsyncControllerCallback<ResourceInfo>() {
-        @Override
-        public void onSuccess(ResourceInfo result) {
-          setMaxImage(result);
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          setMaxImage(null);
-        }
-      });
+    if (getMinTrackImage() != null) {
+      images.add(getMinTrackImage());
     }
-    
-    String minTrackImage = getMinTrackImageName();    
-    if (minTrackImage != null && !minTrackImage.isEmpty()) {
-      resolveResource(minTrackImage, false, new AsyncControllerCallback<ResourceInfo>() {
-        @Override
-        public void onSuccess(ResourceInfo result) {
-          setMinTrackImage(result);
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          setMinTrackImage(null);
-        }
-      });
+    if (getMaxImage() != null) {
+      images.add(getMaxImage());
     }
-    
-    String maxTrackImage = getMaxTrackImageName();    
-    if (maxTrackImage != null && !maxTrackImage.isEmpty()) {
-      resolveResource(maxTrackImage, false, new AsyncControllerCallback<ResourceInfo>() {
-        @Override
-        public void onSuccess(ResourceInfo result) {
-          setMaxTrackImage(result);
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          setMaxTrackImage(null);
-        }
-      });
+    if (getMinImage() != null) {
+      images.add(getMinImage());
+    }
+    return images;
+  }
+
+  @Override
+  public void onResourceChanged(String name) {
+    if (name.equals(getThumbImageName())) {
+      raisePropertyChanged("thumbImage", thumbImage, thumbImage);
+    } else if (name.equals(getMaxTrackImageName())) {
+      raisePropertyChanged("maxTrackImage", maxTrackImage, maxTrackImage);
+    } else if (name.equals(getMinTrackImageName())) {
+      raisePropertyChanged("minTrackImage", minTrackImage, minTrackImage);
+    } else if (name.equals(getMaxImageName())) {
+      raisePropertyChanged("maxImage", maxImage, maxImage);
+    } else if (name.equals(getMinImageName())) {
+      raisePropertyChanged("minImage", minImage, minImage);
     }
   }
 
