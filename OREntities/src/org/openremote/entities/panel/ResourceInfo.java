@@ -98,4 +98,9 @@ public class ResourceInfo {
     changedCallback.onResourceChanged(getName());
   }
   
+  @Override
+  public String toString() {
+    return getName();
+  }
+  
 }

@@ -21,9 +21,18 @@
 package org.openremote.entities.panel;
 
 /**
- * Interface defining an object that can contain a widget  
+ * State Map defining a mapping for a sensor value  
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
-public interface WidgetContainer {
-  public Widget getWidget();
+class StateMap {
+  private String name;
+  private String value;
+  
+  String getName() {
+    return name;
+  }
+  
+  String getValue() {
+    return value;
+  } 
 }

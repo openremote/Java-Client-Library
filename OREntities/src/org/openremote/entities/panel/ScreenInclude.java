@@ -20,10 +20,37 @@
  */
 package org.openremote.entities.panel;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
- * Interface defining an object that can contain a widget  
+ * Used for marshalling to/from JSON  
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
-public interface WidgetContainer {
-  public Widget getWidget();
+class ScreenInclude {
+  @JsonBackReference("group-screeninclude")
+  Group parentGroup;
+  private Screen screen;
+  @JsonProperty("ref")
+  int screenRef;
+	private String type = "screen";
+  
+  Screen getScreen() {
+    if (screen == null) {
+      List<Screen> screens = parentGroup.parentGroupList.parentPanel.getScreens();
+      for (Screen screen : screens) {
+        if (screen.id == screenRef) {
+          this.screen = screen;
+          break;
+        }
+      }      
+    }
+    return screen;
+  }
+  
+  String getType() {
+    return type;
+  }
 }

@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.openremote.entities.controller.ControllerError;
 import org.openremote.entities.controller.ControllerResponseCode;
 import org.openremote.entities.controller.PanelInfoList;
-import org.openremote.entities.panel.version1.PanelDefinitionJSONTest;
+import org.openremote.entities.panel.PanelDefinitionJSONTest;
 import org.openremote.entities.util.JacksonProcessor;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;

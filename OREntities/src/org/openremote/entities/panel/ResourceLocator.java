@@ -30,7 +30,23 @@ import org.openremote.entities.controller.AsyncControllerCallback;
  *
  */
 public interface ResourceLocator {
+  /**
+   * Get the data of the named resource asynchronously (e.g. for an image it will get the byte[] of the actual image 
+   * @param resourceName
+   * @param resourceDataCallback
+   */
   public void getResourceData(String resourceName, AsyncControllerCallback<ResourceDataResponse> resourceDataCallback);
   
+  /**
+   * Get the details of the named resource asynchronously
+   * @param resourceName
+   * @param resourceCallback
+   */
   public void getResourceInfoDetails(String resourceName, AsyncControllerCallback<ResourceInfoDetails> resourceCallback);
+  
+  /**
+   * Timeout in milliseconds used when retrieving resources through this resource locator   * 
+   * @param timeout
+   */
+  public void setTimeout(int timeout);
 }

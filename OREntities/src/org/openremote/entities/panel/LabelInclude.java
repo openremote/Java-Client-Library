@@ -20,10 +20,32 @@
  */
 package org.openremote.entities.panel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
- * Interface defining an object that can contain a widget  
+ * Used for marshalling to/from JSON
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
-public interface WidgetContainer {
-  public Widget getWidget();
+class LabelInclude {
+  @JsonIgnore
+  LabelWidget label;
+  @JsonProperty("ref")
+  int labelRef;
+	private String type = "label";
+  
+  LabelWidget getLabel() {
+    return label;
+  }
+  
+  String getType() {
+    return type;
+  }
+  
+  LabelInclude() {
+  }
+  
+  LabelInclude(LabelWidget label) {
+    this.label = label;
+  }
 }

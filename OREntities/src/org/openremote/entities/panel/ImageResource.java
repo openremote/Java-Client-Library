@@ -21,9 +21,14 @@
 package org.openremote.entities.panel;
 
 /**
- * Interface defining an object that can contain a widget  
+ * Used for marshalling to/from JSON
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
+ *
  */
-public interface WidgetContainer {
-  public Widget getWidget();
+class ImageResource {
+  private String src;
+
+  String getSrc() {
+    return src;
+  }  
 }

@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openremote.entities.controller.PanelInfoList;
-import org.openremote.entities.panel.version1.PanelDefinitionJSONTest;
+import org.openremote.entities.panel.PanelDefinitionJSONTest;
 import org.openremote.entities.util.JacksonProcessor;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;

@@ -21,9 +21,29 @@
 package org.openremote.entities.panel;
 
 /**
- * Interface defining an object that can contain a widget  
+ * Abstract layout for all layouts that are positioned on a screen relative
+ * to the top left
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
-public interface WidgetContainer {
-  public Widget getWidget();
+abstract class Layout {
+  private int height;
+  private int width;
+  private int left;
+  private int top;
+  
+  public int getHeight() {
+    return height;
+  }
+  
+  public int getWidth() {
+    return width;
+  }
+  
+  public int getLeft() {
+    return left;
+  }
+  
+  public int getTop() {
+    return top;
+  }
 }

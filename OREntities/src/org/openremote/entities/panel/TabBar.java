@@ -20,10 +20,27 @@
  */
 package org.openremote.entities.panel;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
- * Interface defining an object that can contain a widget  
+ * The tabBar contains any number of {@link TabBarItem} objects. *  
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
-public interface WidgetContainer {
-  public Widget getWidget();
+public class TabBar {
+  @JsonBackReference("panel-tabbar")
+  Panel parentPanel;
+  @JsonBackReference("group-tabbar")
+  Group parentGroup;
+  
+  @JsonProperty("item")
+  @JsonManagedReference("tabbar-tabbaritem")
+  private List<TabBarItem> items;
+
+  public List<TabBarItem> getItems() {
+    return items;
+  }
 }

@@ -28,5 +28,16 @@ import org.openremote.entities.controller.AsyncControllerCallback;
  *
  */
 public interface CommandSender {
+  /**
+   * Try and send the specified command asynchronously
+   * @param command
+   * @param callback
+   */
   public void sendCommand(PanelCommand command, AsyncControllerCallback<PanelCommandResponse> callback);
+  
+  /**
+   * Sets the timeout in milliseconds for attempting to send a command
+   * @param timeout
+   */
+  public void setTimeout(int timeout);
 }

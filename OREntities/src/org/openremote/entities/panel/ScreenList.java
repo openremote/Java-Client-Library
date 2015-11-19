@@ -20,10 +20,23 @@
  */
 package org.openremote.entities.panel;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
- * Interface defining an object that can contain a widget  
+ * This class is only for Jackson as it doesn't support the equivalent
+ * of XmlElementWrapper
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
+ *
  */
-public interface WidgetContainer {
-  public Widget getWidget();
+class ScreenList {
+  @JsonBackReference("panel-screenlist")
+  Panel parentPanel;
+  
+  @JsonProperty("screen")
+  @JsonManagedReference("screenlist-screen")
+  List<Screen> screens;
 }
