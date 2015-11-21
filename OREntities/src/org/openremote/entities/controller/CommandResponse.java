@@ -18,20 +18,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openremote.entities.panel;
+package org.openremote.entities.controller;
 
-import org.openremote.entities.controller.CommandSender;
 
 /**
- * Interface for widgets that need to send commands to the controller;
- * at registration time the controller service will call setCommandSender
- * the widget is responsible for calling commandSender.sendCommand when
- * required.
+ * Response object received from the controller after sending a command
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
  */
-public interface CommandWidget {
-  public void setCommandSender(CommandSender commandSender);
+public class CommandResponse {
+  ControllerResponseCode responseCode;
   
-  public void setValueFailureHandler(ValueSetFailureHandler commandFailureHandler);
+  public CommandResponse(ControllerResponseCode responseCode) {
+    this.responseCode = responseCode; 
+  }
+
+  public ControllerResponseCode getResponseCode() {
+    return responseCode;
+  }
 }

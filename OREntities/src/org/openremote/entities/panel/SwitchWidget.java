@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openremote.entities.controller.AsyncControllerCallback;
+import org.openremote.entities.controller.CommandSender;
+import org.openremote.entities.controller.ControlCommand;
+import org.openremote.entities.controller.ControlCommandResponse;
 import org.openremote.entities.controller.ControllerResponseCode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,13 +37,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class SwitchWidget extends SensoryWidget implements CommandWidget {
-  public enum State {
-    ON,
-    OFF
-  }
-  
   @JsonIgnore  
-  private State state;
+  private SwitchState state;
   @JsonIgnore
   private CommandSender commandSender;
   @JsonIgnore
@@ -114,12 +112,12 @@ public class SwitchWidget extends SensoryWidget implements CommandWidget {
   @Override
   public void onSensorValueChanged(int sensorId, String value) {
     try {
-      State state = Enum.valueOf(State.class, value.toUpperCase());
+      SwitchState state = Enum.valueOf(SwitchState.class, value.toUpperCase());
       if (this.state == state) {
         return;
       }
       
-      State oldValue = this.state;
+      SwitchState oldValue = this.state;
       this.state = state;      
       raisePropertyChanged("state", oldValue, state);
     } catch (IllegalArgumentException e) {
@@ -129,11 +127,11 @@ public class SwitchWidget extends SensoryWidget implements CommandWidget {
     }    
   }
   
-  public State getState() {
+  public SwitchState getState() {
     return state;
   }
   
-  public void setState(State state) {
+  public void setState(SwitchState state) {
     if (this.state == state) {
       return;
     }
@@ -144,9 +142,9 @@ public class SwitchWidget extends SensoryWidget implements CommandWidget {
     {
       String data = state.toString().toLowerCase();
       
-      commandSender.sendCommand(new PanelCommand(id, data), new AsyncControllerCallback<PanelCommandResponse>() {
+      commandSender.sendControlCommand(new ControlCommand(id, data), new AsyncControllerCallback<ControlCommandResponse>() {
         @Override
-        public void onSuccess(PanelCommandResponse result) {
+        public void onSuccess(ControlCommandResponse result) {
           // Do nothing here
         }
         

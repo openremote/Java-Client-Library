@@ -20,19 +20,31 @@
  */
 package org.openremote.entities.controller;
 
+
 /**
- * List of Supported Controller Commands
+ * Interface for components that can send commands to the controller
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
  */
-public enum ControllerCommand {
-	GET_PANEL_LIST,
-	GET_PANEL_LAYOUT,
-	SEND_COMMAND,
-	GET_SENSOR_STATUS,
-	DO_SENSOR_POLLING,
-	GET_ROUND_ROBIN_LIST,
-	IS_ALIVE,
-	IS_SECURE,
-	LOGOUT
+public interface CommandSender {
+  /**
+   * Try and send the specified control command asynchronously
+   * @param command
+   * @param callback
+   */
+  public void sendControlCommand(ControlCommand command, AsyncControllerCallback<ControlCommandResponse> callback);
+
+  /**
+   * Try and send the specified device command asynchronously
+   * @param command
+   * @param parameter
+   * @param callback
+   */
+  public void sendCommand(Command command, String parameter, AsyncControllerCallback<CommandResponse> callback);
+  
+  /**
+   * Sets the timeout in milliseconds for attempting to send a command
+   * @param timeout
+   */
+  public void setTimeout(int timeout);
 }

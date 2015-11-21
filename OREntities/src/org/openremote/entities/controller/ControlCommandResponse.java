@@ -18,27 +18,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openremote.entities.panel;
+package org.openremote.entities.controller;
+
 
 /**
- * Defines a panel command used for communicating with the controller
+ * Response object received from the controller after sending a control command
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
  */
-public class PanelCommand {
+public class ControlCommandResponse extends CommandResponse {
   private int senderId;
-  private String data;
   
-  public PanelCommand(int senderId, String data) {
+  public ControlCommandResponse(int senderId, ControllerResponseCode responseCode) {
+    super(responseCode);
     this.senderId = senderId;
-    this.data = data;    
   }
 
   public int getSenderId() {
     return senderId;
-  }
-
-  public String getData() {
-    return data;
   }
 }

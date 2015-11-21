@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openremote.entities.controller.AsyncControllerCallback;
+import org.openremote.entities.controller.CommandSender;
+import org.openremote.entities.controller.ControlCommand;
+import org.openremote.entities.controller.ControlCommandResponse;
 import org.openremote.entities.controller.ControllerResponseCode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -120,9 +123,9 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
     
     if (commandSender != null)
     {
-      commandSender.sendCommand(new PanelCommand(id, Integer.toString(getValue())), new AsyncControllerCallback<PanelCommandResponse>() {
+      commandSender.sendControlCommand(new ControlCommand(id, Integer.toString(getValue())), new AsyncControllerCallback<ControlCommandResponse>() {
         @Override
-        public void onSuccess(PanelCommandResponse result) {
+        public void onSuccess(ControlCommandResponse result) {
           // Do nothing here
         }
         

@@ -18,29 +18,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openremote.entities.panel;
-
-import org.openremote.entities.controller.ControllerResponseCode;
+package org.openremote.entities.controller;
 
 /**
- * Response object received from the controller after sending a command
+ * List of Supported Controller Commands
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
  */
-public class PanelCommandResponse {
-  private int senderId;
-  ControllerResponseCode responseCode;
-  
-  public PanelCommandResponse(int senderId, ControllerResponseCode responseCode) {
-    this.senderId = senderId;
-    this.responseCode = responseCode; 
-  }
-
-  public int getSenderId() {
-    return senderId;
-  }
-
-  public ControllerResponseCode getResponseCode() {
-    return responseCode;
-  }
+public enum ControllerCommands {
+	GET_PANEL_LIST,
+	GET_PANEL_LAYOUT,
+	SEND_COMMAND,
+	GET_SENSOR_STATUS,
+	DO_SENSOR_POLLING,
+	GET_ROUND_ROBIN_LIST,
+	IS_ALIVE,
+	IS_SECURE,
+	LOGOUT
 }

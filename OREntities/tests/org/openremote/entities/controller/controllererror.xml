@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openremote xmlns="http://www.openremote.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openremote.org http://www.openremote.org/schemas/controller.xsd">
+
+<error>
+  <code>504</code>
+  <message>Time out</message>
+</error>
+</openremote>

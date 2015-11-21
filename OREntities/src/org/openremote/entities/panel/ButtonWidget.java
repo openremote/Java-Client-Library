@@ -27,6 +27,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.openremote.entities.controller.AsyncControllerCallback;
+import org.openremote.entities.controller.CommandSender;
+import org.openremote.entities.controller.ControlCommand;
+import org.openremote.entities.controller.ControlCommandResponse;
 import org.openremote.entities.controller.ControllerResponseCode;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -74,8 +77,10 @@ public class ButtonWidget extends Widget implements CommandWidget {
   }
   
   public enum State {
-    RELEASED,
-    PRESSED
+    SHORT_PRESSED,
+    LONG_PRESSED,
+    SHORT_RELEASED,
+    LONG_RELEASED
   }
 
   @JsonBackReference("cell-button")
@@ -136,7 +141,7 @@ public class ButtonWidget extends Widget implements CommandWidget {
     this.state = state;
     
     // Start or stop timer
-    onStateChanged(state == State.PRESSED);   
+    onStateChanged(state == State.SHORT_PRESSED);   
   }
 
   @JsonSetter("repeat")
@@ -269,9 +274,9 @@ public class ButtonWidget extends Widget implements CommandWidget {
   private void sendCommand(boolean isLongPress) {
     if (commandSender != null)
     {
-      commandSender.sendCommand(new PanelCommand(id, SHORT_PRESS_DATA), new AsyncControllerCallback<PanelCommandResponse>() {
+      commandSender.sendControlCommand(new ControlCommand(id, SHORT_PRESS_DATA), new AsyncControllerCallback<ControlCommandResponse>() {
         @Override
-        public void onSuccess(PanelCommandResponse result) {
+        public void onSuccess(ControlCommandResponse result) {
           // Do nothing here
         }
         

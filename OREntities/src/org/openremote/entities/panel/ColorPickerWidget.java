@@ -25,6 +25,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openremote.entities.controller.AsyncControllerCallback;
+import org.openremote.entities.controller.CommandSender;
+import org.openremote.entities.controller.ControlCommand;
+import org.openremote.entities.controller.ControlCommandResponse;
 import org.openremote.entities.controller.ControllerResponseCode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -52,19 +55,12 @@ public class ColorPickerWidget extends Widget implements CommandWidget {
     this.commandFailureHandler = commandFailureHandler;
   }
   
-  public void setValue(int red, int green, int blue) {
+  public void setValue(Color color) {
     if (commandSender != null)
     {
-      red = Math.max(0, Math.min(255, red));
-      green = Math.max(0, Math.min(255, green));
-      blue = Math.max(0, Math.min(255, blue));
-
-      // Convert RGB to HEX color code string
-      String hex = String.format("#%02X%02X%02X", red, green, blue);
-      
-      commandSender.sendCommand(new PanelCommand(id, hex), new AsyncControllerCallback<PanelCommandResponse>() {
+      commandSender.sendControlCommand(new ControlCommand(id, color.toString()), new AsyncControllerCallback<ControlCommandResponse>() {
         @Override
-        public void onSuccess(PanelCommandResponse result) {
+        public void onSuccess(ControlCommandResponse result) {
           // Do nothing here
         }
         

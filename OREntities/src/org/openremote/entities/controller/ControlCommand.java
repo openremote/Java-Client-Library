@@ -18,26 +18,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.openremote.entities.panel;
-
-import org.openremote.entities.controller.AsyncControllerCallback;
+package org.openremote.entities.controller;
 
 /**
- * Interface for components that can send commands to the controller
+ * Defines a command used for communicating with the controller
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  *
  */
-public interface CommandSender {
-  /**
-   * Try and send the specified command asynchronously
-   * @param command
-   * @param callback
-   */
-  public void sendCommand(PanelCommand command, AsyncControllerCallback<PanelCommandResponse> callback);
+public class ControlCommand {
+  private int senderId;
+  private String data;
   
-  /**
-   * Sets the timeout in milliseconds for attempting to send a command
-   * @param timeout
-   */
-  public void setTimeout(int timeout);
+  public ControlCommand(int senderId, String data) {
+    this.senderId = senderId;
+    this.data = data;    
+  }
+
+  public int getSenderId() {
+    return senderId;
+  }
+
+  public String getData() {
+    return data;
+  }
 }

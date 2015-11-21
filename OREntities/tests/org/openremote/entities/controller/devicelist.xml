@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<devices>
+  <device id="22999" name="SWITCH TEST" />
+  <device id="23000" name="BUTTON TEST" />
+  <device id="22998" name="SLIDER TEST" />
+  <device id="23002" name="STUARTLED" />
+  <device id="23001" name="VELBUS" />
+</devices>
