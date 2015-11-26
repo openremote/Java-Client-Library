@@ -26,7 +26,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Used for marshalling to/from JSON  
+ * Used for marshalling to/from JSON
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 class ScreenInclude {
@@ -35,8 +36,8 @@ class ScreenInclude {
   private Screen screen;
   @JsonProperty("ref")
   int screenRef;
-	private String type = "screen";
-  
+  private String type = "screen";
+
   Screen getScreen() {
     if (screen == null) {
       List<Screen> screens = parentGroup.parentGroupList.parentPanel.getScreens();
@@ -45,11 +46,11 @@ class ScreenInclude {
           this.screen = screen;
           break;
         }
-      }      
+      }
     }
     return screen;
   }
-  
+
   String getType() {
     return type;
   }

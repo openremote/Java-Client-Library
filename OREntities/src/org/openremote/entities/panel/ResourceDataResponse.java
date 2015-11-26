@@ -24,24 +24,25 @@ import org.openremote.entities.controller.ControllerResponseCode;
 
 /**
  * Response object encapsulating resource data for a particular resource
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public class ResourceDataResponse {
   private byte[] data;
   private String resourceName;
   ControllerResponseCode responseCode;
-  
+
   public ResourceDataResponse(String resourceName, byte[] data, ControllerResponseCode responseCode) {
     this.resourceName = resourceName;
     this.data = data;
-    this.responseCode = responseCode; 
+    this.responseCode = responseCode;
   }
 
   public String getResourceName() {
     return resourceName;
   }
-  
+
   public byte[] getData() {
     return data;
   }

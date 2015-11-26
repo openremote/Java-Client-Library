@@ -23,8 +23,9 @@ package org.openremote.entities.panel;
 import java.util.List;
 
 /**
- * An iFrame for displaying a web page on a panel; src can be linked to a
- * sensor and can dynamically change
+ * An iFrame for displaying a web page on a panel; src can be linked to a sensor
+ * and can dynamically change
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class WebViewWidget extends SensoryWidget {
@@ -36,11 +37,9 @@ public class WebViewWidget extends SensoryWidget {
     return src;
   }
 
-
   public String getUsername() {
     return username;
   }
-
 
   public String getPassword() {
     return password;
@@ -51,12 +50,12 @@ public class WebViewWidget extends SensoryWidget {
     List<SensorLink> sensorLinks = getSensorLinks();
     return sensorLinks != null && sensorLinks.size() > 0;
   }
-  
+
   private void setSrc(String src) {
     if (this.src.equalsIgnoreCase(src)) {
       return;
     }
-    
+
     String oldValue = this.src;
     this.src = src;
     raisePropertyChanged("src", oldValue, src);
@@ -64,7 +63,7 @@ public class WebViewWidget extends SensoryWidget {
 
   @Override
   public void onSensorValueChanged(int sensorId, String value) {
-    StateMap matchedMap = getStateMap(sensorId, value); 
+    StateMap matchedMap = getStateMap(sensorId, value);
     String val = matchedMap != null ? matchedMap.getValue() : src;
     setSrc(val);
   }
@@ -73,7 +72,6 @@ public class WebViewWidget extends SensoryWidget {
   public List<ResourceInfo> getResources() {
     return null;
   }
-
 
   @Override
   public void onResourceChanged(String name) {

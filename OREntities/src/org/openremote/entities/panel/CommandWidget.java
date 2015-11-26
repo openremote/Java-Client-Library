@@ -23,15 +23,15 @@ package org.openremote.entities.panel;
 import org.openremote.entities.controller.CommandSender;
 
 /**
- * Interface for widgets that need to send commands to the controller;
- * at registration time the controller service will call setCommandSender
- * the widget is responsible for calling commandSender.sendCommand when
- * required.
+ * Interface for widgets that need to send commands to the controller; at
+ * registration time the controller service will call setCommandSender the
+ * widget is responsible for calling commandSender.sendCommand when required.
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public interface CommandWidget {
   public void setCommandSender(CommandSender commandSender);
-  
+
   public void setValueFailureHandler(ValueSetFailureHandler commandFailureHandler);
 }

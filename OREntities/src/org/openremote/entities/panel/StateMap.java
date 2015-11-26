@@ -21,18 +21,19 @@
 package org.openremote.entities.panel;
 
 /**
- * State Map defining a mapping for a sensor value  
+ * State Map defining a mapping for a sensor value
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 class StateMap {
   private String name;
   private String value;
-  
+
   String getName() {
     return name;
   }
-  
+
   String getValue() {
     return value;
-  } 
+  }
 }

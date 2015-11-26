@@ -22,16 +22,17 @@ package org.openremote.entities.controller;
 
 /**
  * Defines a command used for communicating with the controller
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public class ControlCommand {
   private int senderId;
   private String data;
-  
+
   public ControlCommand(int senderId, String data) {
     this.senderId = senderId;
-    this.data = data;    
+    this.data = data;
   }
 
   public int getSenderId() {

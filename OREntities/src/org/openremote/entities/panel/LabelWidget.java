@@ -21,9 +21,11 @@
 package org.openremote.entities.panel;
 
 import java.util.List;
+
 /**
  * The label can set font size and color, and text can be linked to a sensor
- * (i.e. dynamic).  
+ * (i.e. dynamic).
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class LabelWidget extends SensoryWidget {
@@ -35,15 +37,15 @@ public class LabelWidget extends SensoryWidget {
   public String getText() {
     return text;
   }
-  
+
   public String getColor() {
     return color;
   }
-  
+
   public int getFontSize() {
     return fontSize;
   }
-  
+
   public Boolean getIsDynamic() {
     // For now can just check if sensor links > 0
     List<SensorLink> sensorLinks = getSensorLinks();
@@ -53,25 +55,26 @@ public class LabelWidget extends SensoryWidget {
   @Override
   public void onSensorValueChanged(int sensorId, String value) {
     // Only sensor linking supported at present is for text property
-    StateMap matchedMap = getStateMap(sensorId, value); 
+    StateMap matchedMap = getStateMap(sensorId, value);
     String val = matchedMap != null ? matchedMap.getValue() : value;
     setText(val);
   }
-  
+
+  @Override
   public String getName() {
     return isInitialised ? name : text;
   }
-  
+
   synchronized private void setText(String value) {
     if (!isInitialised) {
       name = text;
       isInitialised = true;
     }
-    
+
     if (text.equals(value)) {
       return;
     }
-    
+
     String oldValue = text;
     text = value;
     raisePropertyChanged("text", oldValue, text);

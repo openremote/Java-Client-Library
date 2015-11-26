@@ -29,8 +29,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Forwards to screen or do other logical functions.
- * Includes to group, to screen, to previous screen , to next screen, back, login, logout and setting.
+ * Forwards to screen or do other logical functions. Includes to group, to
+ * screen, to previous screen , to next screen, back, login, logout and setting.
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class Navigation {
@@ -41,9 +42,9 @@ public class Navigation {
     LOGOUT("logout"),
     NEXT("nextScreen"),
     PREVIOUS("previousScreen");
- 
+
     private final String value;
-    
+
     private SystemScreenType(String value) {
       this.value = value;
     }
@@ -55,24 +56,24 @@ public class Navigation {
 
     @JsonCreator
     public static SystemScreenType fromString(String v) {
-        for (SystemScreenType c: SystemScreenType.values()) {
-            if (c.value.equalsIgnoreCase(v)) {
-                return c;
-            }
+      for (SystemScreenType c : SystemScreenType.values()) {
+        if (c.value.equalsIgnoreCase(v)) {
+          return c;
         }
-        throw new IllegalArgumentException(v);
+      }
+      throw new IllegalArgumentException(v);
     }
   }
 
   @JsonBackReference("tabbaritem-navigation")
   TabBarItem parentTabBarItem;
-  
+
   @JsonBackReference("gesture-navigation")
   Gesture parentGesture;
-  
+
   @JsonBackReference("button-navigation")
   ButtonWidget parentButton;
-  
+
   private SystemScreenType to;
   @JsonIgnore
   private Group toGroup;
@@ -82,11 +83,11 @@ public class Navigation {
   private Screen toScreen;
   @JsonProperty("toScreen")
   private Integer toScreenId;
-  
+
   public SystemScreenType getTo() {
     return to;
   }
-  
+
   public Group getToGroup() {
     if (toGroupId != null && toGroup == null) {
       List<Group> groups = null;
@@ -94,18 +95,21 @@ public class Navigation {
         if (parentTabBarItem.parentTabBar.parentPanel != null) {
           groups = parentTabBarItem.parentTabBar.parentPanel.getGroups();
         } else if (parentTabBarItem.parentTabBar.parentGroup != null) {
-          groups = parentTabBarItem.parentTabBar.parentGroup.parentGroupList.parentPanel.getGroups();
+          groups = parentTabBarItem.parentTabBar.parentGroup.parentGroupList.parentPanel
+                  .getGroups();
         }
       } else if (parentGesture != null) {
         groups = parentGesture.parentScreen.parentScreenList.parentPanel.getGroups();
       } else if (parentButton != null) {
         if (parentButton.parentAbsolute != null) {
-          groups = parentButton.parentAbsolute.parentScreen.parentScreenList.parentPanel.getGroups();
+          groups = parentButton.parentAbsolute.parentScreen.parentScreenList.parentPanel
+                  .getGroups();
         } else if (parentButton.parentCell != null) {
-          groups = parentButton.parentCell.parentGrid.parentScreen.parentScreenList.parentPanel.getGroups();
+          groups = parentButton.parentCell.parentGrid.parentScreen.parentScreenList.parentPanel
+                  .getGroups();
         }
       }
-      
+
       if (groups != null) {
         for (Group group : groups) {
           if (group.id == toGroupId) {
@@ -117,7 +121,7 @@ public class Navigation {
     }
     return toGroup;
   }
-  
+
   public Screen getToScreen() {
     if (toScreenId != null && toScreen == null) {
       List<Screen> screens = null;
@@ -125,18 +129,21 @@ public class Navigation {
         if (parentTabBarItem.parentTabBar.parentPanel != null) {
           screens = parentTabBarItem.parentTabBar.parentPanel.getScreens();
         } else if (parentTabBarItem.parentTabBar.parentGroup != null) {
-          screens = parentTabBarItem.parentTabBar.parentGroup.parentGroupList.parentPanel.getScreens();
+          screens = parentTabBarItem.parentTabBar.parentGroup.parentGroupList.parentPanel
+                  .getScreens();
         }
       } else if (parentGesture != null) {
         screens = parentGesture.parentScreen.parentScreenList.parentPanel.getScreens();
       } else if (parentButton != null) {
         if (parentButton.parentAbsolute != null) {
-          screens = parentButton.parentAbsolute.parentScreen.parentScreenList.parentPanel.getScreens();
+          screens = parentButton.parentAbsolute.parentScreen.parentScreenList.parentPanel
+                  .getScreens();
         } else if (parentButton.parentCell != null) {
-          screens = parentButton.parentCell.parentGrid.parentScreen.parentScreenList.parentPanel.getScreens();
+          screens = parentButton.parentCell.parentGrid.parentScreen.parentScreenList.parentPanel
+                  .getScreens();
         }
       }
-      
+
       if (screens != null) {
         for (Screen screen : screens) {
           if (screen.id == toScreenId) {
@@ -147,5 +154,5 @@ public class Navigation {
       }
     }
     return toScreen;
-  }  
+  }
 }

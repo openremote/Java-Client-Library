@@ -24,18 +24,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-
-import org.openremote.entities.controller.AsyncControllerCallback;
-import org.openremote.entities.controller.ControllerResponseCode;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * An image widget capable of dynamically changing the image based
- * on a sensor value.
+ * An image widget capable of dynamically changing the image based on a sensor
+ * value.
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class ImageWidget extends SensoryWidget {
@@ -61,14 +57,14 @@ public class ImageWidget extends SensoryWidget {
   @JsonIgnore
   private ResourceLocator resourceLocator;
   private static final String DEFAULT_KEY = "@*%#DEFAULT@*%#";
-  
+
   private Map<String, ResourceInfo> getImageMap() {
     if (images == null) {
       images = new HashMap<String, ResourceInfo>();
       if (src != null && !src.isEmpty()) {
         images.put(DEFAULT_KEY, new ResourceInfo(src, this));
       }
-      
+
       for (SensorLink link : getSensorLinks()) {
         if (link.getStates() != null) {
           for (StateMap map : link.getStates()) {
@@ -77,53 +73,53 @@ public class ImageWidget extends SensoryWidget {
         }
       }
     }
-       
+
     return images;
   }
-  
+
   public ResourceInfo getCurrentImage() {
     if (currentImage == null) {
       if (getCurrentImageName() != null && !getCurrentImageName().isEmpty()) {
         currentImage = getImageFromMap(getCurrentImageName());
       }
-      
+
       if (currentImage == null) {
         currentImage = getImageFromMap(src);
       }
-    }    
-    
+    }
+
     return currentImage;
   }
-  
+
   private ResourceInfo getImageFromMap(String imageName) {
-    for(ResourceInfo imageResource : getImageMap().values()) {
+    for (ResourceInfo imageResource : getImageMap().values()) {
       if (imageResource.getName().equalsIgnoreCase(imageName)) {
         return imageResource;
       }
     }
-    
+
     return null;
   }
-  
+
   private String getCurrentImageName() {
-    return currentImageName;  
+    return currentImageName;
   }
-  
+
   private void setCurrentImageName(String imageName) {
     if (getCurrentImageName() != null && getCurrentImageName().equals(imageName)) {
       return;
     }
-    
+
     currentImageName = imageName;
     ResourceInfo oldImage = currentImage;
     currentImage = null;
     raisePropertyChanged("currentImage", oldImage, getCurrentImage());
   }
-  
+
   public LabelWidget getLinkedLabel() {
     if (linkedLabelInclude != null && linkedLabel == null && !linkedLabelChecked) {
       linkedLabelChecked = true;
-      
+
       // Find this linked label by looking through all the panel widgets
       Panel panel = null;
       if (parentAbsolute != null) {
@@ -131,22 +127,22 @@ public class ImageWidget extends SensoryWidget {
       } else if (parentCell != null) {
         panel = parentCell.parentGrid.parentScreen.parentScreenList.parentPanel;
       }
-      
+
       if (panel != null) {
-        for (Widget widget : panel.getWidgets(new Class[] {LabelWidget.class})) {
+        for (Widget widget : panel.getWidgets(new Class[] { LabelWidget.class })) {
           if (widget.id == linkedLabelInclude.labelRef) {
-            linkedLabel = (LabelWidget)widget;
+            linkedLabel = (LabelWidget) widget;
             break;
           }
         }
-      }      
+      }
     }
     return linkedLabel;
   }
-    
+
   @Override
   public void onSensorValueChanged(int sensorId, String value) {
-    StateMap matchedMap = getStateMap(sensorId, value); 
+    StateMap matchedMap = getStateMap(sensorId, value);
     setCurrentImageName(matchedMap != null ? matchedMap.getValue() : null);
   }
 

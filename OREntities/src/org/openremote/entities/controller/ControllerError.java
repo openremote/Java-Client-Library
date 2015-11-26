@@ -24,8 +24,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Used for marshalling to/from JSON
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 class Response {
   @JsonProperty
@@ -37,7 +38,7 @@ class Response {
 public class ControllerError {
   @JsonProperty("error")
   private Response response;
-  
+
   public ControllerResponseCode getResponse() {
     return ControllerResponseCode.getResponseCode(response.code);
   }

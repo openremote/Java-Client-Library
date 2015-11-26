@@ -21,23 +21,24 @@
 package org.openremote.entities.panel;
 
 /**
- * Used for marshalling to/from JSON  
+ * Used for marshalling to/from JSON
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 class SliderMinMax {
   int value;
   String image;
   String trackImage;
-  
+
   int getValue() {
     return value;
   }
-  
+
   String getImage() {
     return image;
   }
-  
+
   String getTrackImage() {
     return trackImage;
-  }  
+  }
 }

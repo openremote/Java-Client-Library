@@ -25,8 +25,9 @@ import java.util.List;
 /**
  * Simple interface for defining a resource consumer (i.e. a panel component
  * that requires images)
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public interface ResourceConsumer extends ResourceChangedCallback {
   public List<ResourceInfo> getResources();

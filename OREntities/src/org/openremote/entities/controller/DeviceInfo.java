@@ -22,11 +22,23 @@ package org.openremote.entities.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * A simple wrapper around a device name (for future expansion of device
+ * metadata)
+ * 
+ * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
+ * 
+ */
 public class DeviceInfo {
   @JsonIgnore
   private int id;
   private String name;
-  
+
+  /**
+   * Get the device name
+   * 
+   * @return name of device
+   */
   public String getName() {
     return name;
   }

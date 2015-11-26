@@ -23,8 +23,9 @@ package org.openremote.entities.controller;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Contains information about a controller; this information can be used
- * to recreate an instance of the controller 
+ * Contains information about a controller; this information can be used to
+ * recreate an instance of the controller
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public final class ControllerInfo {
@@ -52,14 +53,14 @@ public final class ControllerInfo {
   void setIdentity(String identity) {
     this.identity = identity;
   }
-  
+
   ControllerInfo() {
   }
 
   public ControllerInfo(String url) {
     this.url = url;
   }
-  
+
   public ControllerInfo(String url, String name, String version, String identity) {
     this.name = name;
     this.version = version;
@@ -77,7 +78,7 @@ public final class ControllerInfo {
   public String getUrl() {
     return url;
   }
-  
+
   public String getIdentity() {
     return identity != null ? identity : "";
   }

@@ -25,9 +25,6 @@ import java.beans.PropertyChangeSupport;
 import java.util.Arrays;
 import java.util.List;
 
-import org.openremote.entities.controller.AsyncControllerCallback;
-import org.openremote.entities.controller.ControllerResponseCode;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -35,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Tab Bar Item can be used for navigation to other screens
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class TabBarItem implements ResourceConsumer, NotifyPropertyChanged {
@@ -42,7 +40,7 @@ public class TabBarItem implements ResourceConsumer, NotifyPropertyChanged {
   TabBar parentTabBar;
   @JsonIgnore
   private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-  
+
   private String name;
   @JsonProperty("navigate")
   @JsonManagedReference("tabbaritem-navigation")
@@ -55,7 +53,7 @@ public class TabBarItem implements ResourceConsumer, NotifyPropertyChanged {
   public String getName() {
     return name;
   }
-  
+
   void setName(String name) {
     this.name = name;
   }
@@ -63,15 +61,15 @@ public class TabBarItem implements ResourceConsumer, NotifyPropertyChanged {
   public Navigation getNavigation() {
     return navigation;
   }
-  
+
   void setNavigation(Navigation navigation) {
     this.navigation = navigation;
   }
-  
+
   private String getImageName() {
     return imageSrc != null ? imageSrc.getSrc() : null;
   }
-  
+
   public ResourceInfo getImage() {
     String imageName = getImageName();
     if (imageName != null && !imageName.isEmpty() && image == null) {
@@ -92,11 +90,11 @@ public class TabBarItem implements ResourceConsumer, NotifyPropertyChanged {
     ResourceInfo img = getImage();
     return img == null ? null : Arrays.asList(new ResourceInfo[] { img });
   }
-  
+
   protected void raisePropertyChanged(String propertyName, Object oldValue, Object newValue) {
     pcs.firePropertyChange(propertyName, oldValue, newValue);
   }
-  
+
   @Override
   public void addPropertyChangeListener(PropertyChangeListener listener) {
     pcs.addPropertyChangeListener(listener);

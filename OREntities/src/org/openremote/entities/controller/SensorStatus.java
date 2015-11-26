@@ -24,18 +24,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Provides status information for a sensor
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public class SensorStatus {
   private int id;
   @JsonProperty("content")
   private String value;
-  
+
   public int getSensorId() {
     return id;
   }
-  
+
   public String getValue() {
     return value;
   }

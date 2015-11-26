@@ -20,18 +20,18 @@
  */
 package org.openremote.entities.panel;
 
-import java.util.Date;
-
 import org.openremote.entities.controller.AsyncControllerCallback;
 import org.openremote.entities.controller.ControllerResponseCode;
 
 /**
- * This is a storage container for information about a named resource; depending on resource
- * loading options the data may or may not get loaded initially. The name, modified time and
- * content type are available when possible; modified time will allow you to decide whether
- * to use a cached copy of the image or to get a newer one. 
+ * This is a storage container for information about a named resource; depending
+ * on resource loading options the data may or may not get loaded initially. The
+ * name, modified time and content type are available when possible; modified
+ * time will allow you to decide whether to use a cached copy of the image or to
+ * get a newer one.
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public class ResourceInfo {
   private ResourceInfoDetails details;
@@ -39,17 +39,17 @@ public class ResourceInfo {
   private String name;
   private byte[] data;
   private ResourceChangedCallback changedCallback;
-  
+
   public ResourceInfo(String name, ResourceChangedCallback changedCallback) {
     this(null, name, changedCallback);
   }
-    
+
   public ResourceInfo(ResourceLocator locator, String name, ResourceChangedCallback changedCallback) {
     this.locator = locator;
     this.name = name;
     this.changedCallback = changedCallback;
   }
-  
+
   public String getName() {
     return name;
   }
@@ -59,35 +59,35 @@ public class ResourceInfo {
       callback.onSuccess(details);
       return;
     }
-    
+
     if (locator == null) {
       callback.onFailure(ControllerResponseCode.RESOURCE_LOCATOR_NULL);
       return;
     }
-    
+
     // Try and get the resource from the locator
     locator.getResourceInfoDetails(name, callback);
   }
-  
+
   public boolean isDataLoaded() {
     return data != null;
   }
-  
+
   public void getData(final AsyncControllerCallback<ResourceDataResponse> callback) {
     if (data != null) {
       callback.onSuccess(new ResourceDataResponse(name, data, ControllerResponseCode.OK));
       return;
     }
-    
+
     if (locator == null) {
       callback.onFailure(ControllerResponseCode.RESOURCE_LOCATOR_NULL);
       return;
     }
-    
+
     // Try and get the resource from the locator
     locator.getResourceData(name, callback);
   }
-  
+
   /*
    * Mechanism for pushing resource locator resolver into each resource
    */
@@ -97,10 +97,10 @@ public class ResourceInfo {
     data = null;
     changedCallback.onResourceChanged(getName());
   }
-  
+
   @Override
   public String toString() {
     return getName();
   }
-  
+
 }

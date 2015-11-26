@@ -23,10 +23,11 @@ package org.openremote.entities.panel;
 import org.openremote.entities.controller.ControllerResponseCode;
 
 /**
- * Interface used for handling failures when trying to set a value of a
- * widget property
+ * Interface used for handling failures when trying to set a value of a widget
+ * property
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public interface ValueSetFailureHandler {
   void onSetValueFailed(String propertyName, ControllerResponseCode code);

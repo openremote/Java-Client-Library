@@ -31,9 +31,11 @@ import org.openremote.entities.controller.ControllerResponseCode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Slider widget for displaying an integer value on an interactive or passive
- * slider.  
+ * slider.
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class SliderWidget extends SensoryWidget implements CommandWidget {
@@ -41,7 +43,7 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
     RELEASED,
     PRESSED
   }
-  
+
   @JsonProperty("thumbImage")
   private String thumbImageName;
   @JsonIgnore
@@ -68,7 +70,7 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
   private State minImageState;
   @JsonIgnore
   private State maxImageState;
-  
+
   public State getMinImageState() {
     return minImageState;
   }
@@ -79,12 +81,12 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
     if (this.minImageState == minImageState) {
       return;
     }
-    
+
     this.minImageState = minImageState;
-        
+
     // Just decrement value by one for now when pressed
     if (minImageState == State.PRESSED) {
-      setValue(value-1);
+      setValue(value - 1);
     }
   }
 
@@ -98,12 +100,12 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
     if (this.maxImageState == maxImageState) {
       return;
     }
-    
+
     this.maxImageState = maxImageState;
-        
+
     // Just increment value by one for now when pressed
     if (maxImageState == State.PRESSED) {
-      setValue(value+1);
+      setValue(value + 1);
     }
   }
 
@@ -113,52 +115,51 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
 
   public void setValue(int value) {
     value = value < getMinValue() ? getMinValue() : value > getMaxValue() ? getMaxValue() : value;
-    
-    if (isPassive() || this.value == value)
-    {
+
+    if (isPassive() || this.value == value) {
       return;
     }
-    
+
     this.value = value;
-    
-    if (commandSender != null)
-    {
-      commandSender.sendControlCommand(new ControlCommand(id, Integer.toString(getValue())), new AsyncControllerCallback<ControlCommandResponse>() {
-        @Override
-        public void onSuccess(ControlCommandResponse result) {
-          // Do nothing here
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          if (commandFailureHandler != null) {
-            commandFailureHandler.onSetValueFailed("value", error);
-          }
-        }
-      });
+
+    if (commandSender != null) {
+      commandSender.sendControlCommand(new ControlCommand(id, Integer.toString(getValue())),
+              new AsyncControllerCallback<ControlCommandResponse>() {
+                @Override
+                public void onSuccess(ControlCommandResponse result) {
+                  // Do nothing here
+                }
+
+                @Override
+                public void onFailure(ControllerResponseCode error) {
+                  if (commandFailureHandler != null) {
+                    commandFailureHandler.onSetValueFailed("value", error);
+                  }
+                }
+              });
     }
   }
-  
+
   String getThumbImageName() {
-      return thumbImageName;
+    return thumbImageName;
   }
-    
+
   String getMinImageName() {
     return min != null ? min.getImage() : null;
   }
-  
+
   String getMaxImageName() {
     return max != null ? max.getImage() : null;
   }
-  
+
   String getMinTrackImageName() {
     return min != null ? min.getTrackImage() : null;
   }
-  
+
   String getMaxTrackImageName() {
     return max != null ? max.getTrackImage() : null;
   }
-  
+
   public ResourceInfo getThumbImage() {
     String imageName = getThumbImageName();
     if (imageName != null && !imageName.isEmpty() && thumbImage == null) {
@@ -166,7 +167,7 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
     }
     return thumbImage;
   }
-  
+
   public ResourceInfo getMinImage() {
     String imageName = getMinImageName();
     if (imageName != null && !imageName.isEmpty() && minImage == null) {
@@ -174,7 +175,7 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
     }
     return minImage;
   }
-  
+
   public ResourceInfo getMaxImage() {
     String imageName = getMaxImageName();
     if (imageName != null && !imageName.isEmpty() && maxImage == null) {
@@ -182,7 +183,7 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
     }
     return maxImage;
   }
-  
+
   public ResourceInfo getMinTrackImage() {
     String imageName = getMinTrackImageName();
     if (imageName != null && !imageName.isEmpty() && minTrackImage == null) {
@@ -190,7 +191,7 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
     }
     return minTrackImage;
   }
-  
+
   public ResourceInfo getMaxTrackImage() {
     String imageName = getMaxTrackImageName();
     if (imageName != null && !imageName.isEmpty() && maxTrackImage == null) {
@@ -198,23 +199,23 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
     }
     return maxTrackImage;
   }
-  
+
   public int getMinValue() {
     return min != null ? min.getValue() : 0;
   }
-  
+
   public int getMaxValue() {
     return max != null ? max.getValue() : 0;
   }
-  
+
   public boolean isVertical() {
     return vertical;
   }
-  
+
   public boolean isPassive() {
     return passive;
   }
-  
+
   @Override
   public void setCommandSender(CommandSender commandSender) {
     if (!isPassive()) {
@@ -230,11 +231,11 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
       int oldValue = this.value;
       this.value = val;
       raisePropertyChanged("value", oldValue, val);
-    } catch(NumberFormatException e) {
+    } catch (NumberFormatException e) {
       // Do nothing as this really shouldn't happen anyway
     }
   }
-  
+
   @Override
   public void setValueFailureHandler(ValueSetFailureHandler commandFailureHandler) {
     this.commandFailureHandler = commandFailureHandler;
@@ -276,14 +277,14 @@ public class SliderWidget extends SensoryWidget implements CommandWidget {
     }
   }
 
-//  @Override
-//  protected String[] getAllResourceNames() {
-//    return new String[] {
-//      getThumbImageName(),
-//      getMinImageName(),
-//      getMinTrackImageName(),
-//      getMaxImageName(),
-//      getMaxTrackImageName()
-//    };
-//  }
+  // @Override
+  // protected String[] getAllResourceNames() {
+  // return new String[] {
+  // getThumbImageName(),
+  // getMinImageName(),
+  // getMinTrackImageName(),
+  // getMaxImageName(),
+  // getMaxTrackImageName()
+  // };
+  // }
 }

@@ -27,7 +27,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * The tabBar contains any number of {@link TabBarItem} objects. *  
+ * The tabBar contains any number of {@link TabBarItem} objects. *
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class TabBar {
@@ -35,7 +36,7 @@ public class TabBar {
   Panel parentPanel;
   @JsonBackReference("group-tabbar")
   Group parentGroup;
-  
+
   @JsonProperty("item")
   @JsonManagedReference("tabbar-tabbaritem")
   private List<TabBarItem> items;

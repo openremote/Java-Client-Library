@@ -27,22 +27,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Base class for all widgets. All widget properties are read-only (although not
- * truly immutable in all cases). All widgets provide property change notification
- * and resource consumer functionality but may not use either.
+ * truly immutable in all cases). All widgets provide property change
+ * notification and resource consumer functionality but may not use either.
  * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public abstract class Widget implements ResourceConsumer, NotifyPropertyChanged {
   protected int id;
   protected String name;
   @JsonIgnore
   private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-  
+
   protected void raisePropertyChanged(String propertyName, Object oldValue, Object newValue) {
     pcs.firePropertyChange(propertyName, oldValue, newValue);
   }
-  
+
   @Override
   public void addPropertyChangeListener(PropertyChangeListener listener) {
     pcs.addPropertyChangeListener(listener);
@@ -52,7 +52,7 @@ public abstract class Widget implements ResourceConsumer, NotifyPropertyChanged 
   public void removePropertyChangeListener(PropertyChangeListener listener) {
     pcs.removePropertyChangeListener(listener);
   }
-  
+
   public String getName() {
     return name;
   }

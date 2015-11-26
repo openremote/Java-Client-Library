@@ -27,14 +27,15 @@ import org.openremote.entities.panel.PanelInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Contains information about panels available on a controller
+ * List of panels available on a particular controller
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public class PanelInfoList {
   @JsonProperty("panel")
   private List<PanelInfo> panelInfos;
-  
+
   public List<PanelInfo> getPanelInfos() {
     return panelInfos;
   }

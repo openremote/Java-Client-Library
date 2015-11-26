@@ -23,11 +23,12 @@ package org.openremote.entities.panel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
- * Absolute layout that can contain one widget and is positioned relative
- * to the top left of the containing screen.
- * It parse the absolute node, contains size and position info.
- *  
+ * Absolute layout that can contain one widget and is positioned relative to the
+ * top left of the containing screen. It parse the absolute node, contains size
+ * and position info.
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class AbsoluteLayout extends Layout implements WidgetContainer {
@@ -45,6 +46,7 @@ public class AbsoluteLayout extends Layout implements WidgetContainer {
   private SwitchWidget switchWidget;
   private WebViewWidget web;
 
+  @Override
   public Widget getWidget() {
     if (button != null) {
       return button;

@@ -22,14 +22,20 @@ package org.openremote.entities.controller;
 
 import java.util.List;
 
+/**
+ * A text based sensor that provides value mapping via states
+ * 
+ * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
+ * 
+ */
 public class CustomSensor extends Sensor {
   private String value;
   List<String> states;
-  
+
   public CustomSensor() {
     super(SensorType.CUSTOM);
   }
-  
+
   public List<String> getStates() {
     return states;
   }
@@ -38,10 +44,10 @@ public class CustomSensor extends Sensor {
     if (value == null) {
       value = super.getStringValue();
     }
-    
+
     return value;
   }
-  
+
   @Override
   protected void onValueChanged() {
     String oldValue = value;

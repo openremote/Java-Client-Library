@@ -23,8 +23,11 @@ package org.openremote.entities.panel;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
- * Defines a link to a sensor and defines the {@link java.util.List<org.openremote.entities.panel.version1.StateMap>} to use 
+ * Defines a link to a sensor and defines the {@link java.util.List
+ * <org.openremote.entities.panel.version1.StateMap>} to use
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class SensorLink {
@@ -32,15 +35,15 @@ public class SensorLink {
   int ref;
   @JsonProperty("state")
   List<StateMap> states;
-  
+
   String getType() {
     return type;
   }
-  
+
   public int getRef() {
     return ref;
   }
-  
+
   List<StateMap> getStates() {
     return states;
   }

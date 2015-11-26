@@ -22,17 +22,18 @@ package org.openremote.entities.controller;
 
 /**
  * List of Supported Controller Commands
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public enum ControllerCommands {
-	GET_PANEL_LIST,
-	GET_PANEL_LAYOUT,
-	SEND_COMMAND,
-	GET_SENSOR_STATUS,
-	DO_SENSOR_POLLING,
-	GET_ROUND_ROBIN_LIST,
-	IS_ALIVE,
-	IS_SECURE,
-	LOGOUT
+  GET_PANEL_LIST,
+  GET_PANEL_LAYOUT,
+  SEND_COMMAND,
+  GET_SENSOR_STATUS,
+  DO_SENSOR_POLLING,
+  GET_ROUND_ROBIN_LIST,
+  IS_ALIVE,
+  IS_SECURE,
+  LOGOUT
 }

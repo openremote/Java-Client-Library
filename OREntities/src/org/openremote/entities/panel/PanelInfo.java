@@ -25,8 +25,8 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * Provides information about a panel
- * TODO: Implement version and date support  
+ * Provides information about a panel TODO: Implement version and date support
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public final class PanelInfo {
@@ -41,11 +41,11 @@ public final class PanelInfo {
   public String getName() {
     return name;
   }
-  
+
   public int getVersion() {
     return version;
   }
-  
+
   public Date getModifiedTime() {
     return modifiedTime;
   }

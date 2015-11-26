@@ -23,11 +23,13 @@ package org.openremote.entities.panel;
 import org.openremote.entities.controller.AsyncControllerCallback;
 
 /**
- * This interface defines the contract for retrieving resources from the controller; an instance is plugged into
- * the panel resource consumers when the panel is registered with the controller.
- * TODO : Add support for retrieving multiple resources at the same time on multiple threads
+ * This interface defines the contract for retrieving resources from the
+ * controller; an instance is plugged into the panel resource consumers when the
+ * panel is registered with the controller. TODO : Add support for retrieving
+ * multiple resources at the same time on multiple threads
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public interface ResourceLocator {
   /**
@@ -51,8 +53,8 @@ public interface ResourceLocator {
   // AsyncControllerCallback<ResourceInfo[]> resourceCallback, int timeout);
   //
   /**
-   * Get the data of the named resource asynchronously (e.g. for an image it will get the byte[]
-   * of the actual image
+   * Get the data of the named resource asynchronously (e.g. for an image it
+   * will get the byte[] of the actual image
    * 
    * @param resourceName
    * @param resourceDataCallback

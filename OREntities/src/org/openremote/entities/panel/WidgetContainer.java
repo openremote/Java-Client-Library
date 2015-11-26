@@ -21,7 +21,8 @@
 package org.openremote.entities.panel;
 
 /**
- * Interface defining an object that can contain a widget  
+ * Interface defining an object that can contain a widget
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public interface WidgetContainer {

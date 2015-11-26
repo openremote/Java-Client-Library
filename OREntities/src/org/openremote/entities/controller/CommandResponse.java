@@ -1,6 +1,6 @@
 /*
  * OpenRemote, the Home of the Digital Home.
- * Copyright 2008-2014, OpenRemote Inc.
+ * Copyright 2008-2015, OpenRemote Inc.
  *
  * See the contributors.txt file in the distribution for a
  * full listing of individual contributors.
@@ -20,17 +20,17 @@
  */
 package org.openremote.entities.controller;
 
-
 /**
  * Response object received from the controller after sending a command
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public class CommandResponse {
   ControllerResponseCode responseCode;
-  
+
   public CommandResponse(ControllerResponseCode responseCode) {
-    this.responseCode = responseCode; 
+    this.responseCode = responseCode;
   }
 
   public ControllerResponseCode getResponseCode() {

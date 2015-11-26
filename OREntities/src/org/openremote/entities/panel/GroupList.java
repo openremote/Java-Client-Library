@@ -1,6 +1,6 @@
 /*
  * OpenRemote, the Home of the Digital Home.
- * Copyright 2008-2014, OpenRemote Inc.
+ * Copyright 2008-2015, OpenRemote Inc.
  *
  * See the contributors.txt file in the distribution for a
  * full listing of individual contributors.
@@ -27,16 +27,16 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * This class is only for Jackson as it doesn't support the equivalent
- * of XmlElementWrapper
+ * This class is only for Jackson as it doesn't support the equivalent of
+ * XmlElementWrapper
  * 
- * @author Richard
- *
+ * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
+ * 
  */
 class GroupList {
   @JsonBackReference("panel-grouplist")
   Panel parentPanel;
-  
+
   @JsonProperty("group")
   @JsonManagedReference("grouplist-group")
   List<Group> groups;

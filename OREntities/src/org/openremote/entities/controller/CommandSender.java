@@ -20,11 +20,11 @@
  */
 package org.openremote.entities.controller;
 
-
 /**
  * Interface for components that can send commands to the controller
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public interface CommandSender {
   /**
@@ -37,8 +37,9 @@ public interface CommandSender {
    *          {@link AsyncControllerCallback} callback for handling the response
    *          asynchronously
    */
-  void sendControlCommand(ControlCommand command, AsyncControllerCallback<ControlCommandResponse> callback);
-  
+  void sendControlCommand(ControlCommand command,
+          AsyncControllerCallback<ControlCommandResponse> callback);
+
   /**
    * Returns {@link Boolean} indicating whether command send request was
    * successful.
@@ -51,5 +52,6 @@ public interface CommandSender {
    *          {@link AsyncControllerCallback} callback for handling the response
    *          asynchronously
    */
-  void sendCommand(Command command, String parameter, AsyncControllerCallback<CommandResponse> callback);
+  void sendCommand(Command command, String parameter,
+          AsyncControllerCallback<CommandResponse> callback);
 }

@@ -26,7 +26,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * The screen gesture, which contains 4 swipe types: "top-to-bottom", "bottom-to-top", "left-to-right" and "right-to-left".
+ * The screen gesture, which contains 4 swipe types: "top-to-bottom",
+ * "bottom-to-top", "left-to-right" and "right-to-left".
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class Gesture {
@@ -37,35 +39,35 @@ public class Gesture {
     SWIPE_RIGHT_TO_LEFT("swipe-right-to-left");
 
     private String value;
-    
+
     private GestureType(String value) {
       this.value = value;
     }
-    
+
     @JsonValue
     public String getValue() {
       return value;
     }
   }
-  
+
   @JsonBackReference("screen-gesture")
-  Screen parentScreen;  
+  Screen parentScreen;
   private int id;
   private GestureType type;
   @JsonProperty("navigate")
   private Navigation navigation;
   private Boolean hasControlCommand;
-  
+
   public GestureType getType() {
     return type;
   }
-  
+
   @JsonManagedReference("gesture-navigation")
   public Navigation getNavigation() {
     return navigation;
   }
-  
+
   public Boolean getHasControlCommand() {
     return hasControlCommand;
-  }  
+  }
 }

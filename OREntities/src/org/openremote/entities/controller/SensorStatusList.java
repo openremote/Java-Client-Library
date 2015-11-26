@@ -24,12 +24,13 @@ import java.util.List;
 
 /**
  * Provides list of sensor status information
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public class SensorStatusList {
   List<SensorStatus> status;
-  
+
   public List<SensorStatus> getStatuses() {
     return status;
   }

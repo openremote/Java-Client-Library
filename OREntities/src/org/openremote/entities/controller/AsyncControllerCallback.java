@@ -22,12 +22,13 @@ package org.openremote.entities.controller;
 
 /**
  * Interface defining all asynchronous callbacks
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  * @param <T>
  */
 public interface AsyncControllerCallback<T> {
   void onFailure(ControllerResponseCode error);
-  
+
   void onSuccess(T result);
 }

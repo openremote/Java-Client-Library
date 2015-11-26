@@ -32,12 +32,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Group is parsed by group node, which contains id, name, screens and tabBar.
- *  
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class Group {
   @JsonBackReference("grouplist-group")
-  GroupList parentGroupList;  
+  GroupList parentGroupList;
   int id;
   private String name;
   @JsonManagedReference("group-screeninclude")
@@ -48,11 +48,11 @@ public class Group {
   @JsonManagedReference("group-tabbar")
   @JsonProperty("tabbar")
   private TabBar tabBar;
- 
+
   public String getName() {
     return name;
   }
-  
+
   public List<Screen> getScreens() {
     if (screens == null) {
       List<Screen> screens = new ArrayList<Screen>();
@@ -69,7 +69,7 @@ public class Group {
     }
     return screens;
   }
-  
+
   public TabBar getTabBar() {
     return tabBar;
   }

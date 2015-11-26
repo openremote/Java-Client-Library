@@ -21,8 +21,9 @@
 package org.openremote.entities.panel;
 
 /**
- * Abstract layout for all layouts that are positioned on a screen relative
- * to the top left
+ * Abstract layout for all layouts that are positioned on a screen relative to
+ * the top left
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 abstract class Layout {
@@ -30,19 +31,19 @@ abstract class Layout {
   private int width;
   private int left;
   private int top;
-  
+
   public int getHeight() {
     return height;
   }
-  
+
   public int getWidth() {
     return width;
   }
-  
+
   public int getLeft() {
     return left;
   }
-  
+
   public int getTop() {
     return top;
   }

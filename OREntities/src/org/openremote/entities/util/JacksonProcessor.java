@@ -28,34 +28,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Simple utility class for converting to/from JSON using Jackson
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public class JacksonProcessor {
   private static final ObjectMapper mapper = new ObjectMapper();
 
   static {
-  //Jackson 2.X configuration settings
-  mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, false);            
-  mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-  mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-  mapper.configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true);
-  mapper.configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true);
+    // Jackson 2.X configuration settings
+    mapper.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, false);
+    mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+    mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+    mapper.configure(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY, true);
+    mapper.configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true);
 
-  mapper.setVisibilityChecker(mapper.getSerializationConfig().getDefaultVisibilityChecker()
-          .withFieldVisibility(Visibility.ANY)
-          .withGetterVisibility(Visibility.NONE)
-          .withSetterVisibility(Visibility.NONE)
-          .withCreatorVisibility(Visibility.NONE));
+    mapper.setVisibilityChecker(mapper.getSerializationConfig().getDefaultVisibilityChecker()
+            .withFieldVisibility(Visibility.ANY).withGetterVisibility(Visibility.NONE)
+            .withSetterVisibility(Visibility.NONE).withCreatorVisibility(Visibility.NONE));
   }
-  
+
   private JacksonProcessor() {
   }
-  
+
   public static <T> T unMarshall(String data, Class<T> type) throws Exception {
     return mapper.readValue(data, type);
   }
-  
+
   public static <T> T unMarshall(InputStream is, Class<T> type) throws Exception {
     return mapper.readValue(is, type);
   }

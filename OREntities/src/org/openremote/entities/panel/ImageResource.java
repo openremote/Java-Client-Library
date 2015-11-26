@@ -22,13 +22,14 @@ package org.openremote.entities.panel;
 
 /**
  * Used for marshalling to/from JSON
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 class ImageResource {
   private String src;
 
   String getSrc() {
     return src;
-  }  
+  }
 }

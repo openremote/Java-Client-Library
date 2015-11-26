@@ -27,7 +27,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Contains the entire definition of a panel 
+ * Contains the entire definition of a panel
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public final class Panel {
@@ -40,7 +41,7 @@ public final class Panel {
   @JsonManagedReference("panel-tabbar")
   @JsonProperty("tabbar")
   private TabBar tabBar;
-  
+
   public List<Group> getGroups() {
     return groupsList != null ? groupsList.groups : null;
   }
@@ -52,20 +53,20 @@ public final class Panel {
   public TabBar getTabBar() {
     return tabBar;
   }
-  
+
   public List<Widget> getWidgets() {
-    return getWidgets(new Class[] {Widget.class});
+    return getWidgets(new Class[] { Widget.class });
   }
-  
+
   public List<Widget> getWidgets(Class<?>[] widgetTypes) {
     List<Widget> widgets = new ArrayList<Widget>();
     for (Screen screen : screenList.screens) {
       widgets.addAll(screen.getWidgets(widgetTypes));
     }
-    
+
     return widgets;
   }
-  
+
   public List<ResourceConsumer> getResourceConsumers() {
     List<ResourceConsumer> consumers = new ArrayList<ResourceConsumer>();
     for (Screen screen : getScreens()) {
@@ -83,13 +84,13 @@ public final class Panel {
     }
     return consumers;
   }
-  
+
   @SuppressWarnings("unchecked")
   public <T extends Widget> List<T> getWidgets(Class<T> type) {
     List<Widget> widgets = new ArrayList<Widget>();
     for (Screen screen : screenList.screens) {
-      widgets.addAll(screen.getWidgets(new Class<?>[] {type}));
+      widgets.addAll(screen.getWidgets(new Class<?>[] { type }));
     }
-    return (List<T>)widgets;
+    return (List<T>) widgets;
   }
 }

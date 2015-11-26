@@ -33,11 +33,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Switch widget is capable of sending an alternating on/off command and is
- * capable of feeding back its' current state based on a sensor value.   
+ * capable of feeding back its' current state based on a sensor value.
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class SwitchWidget extends SensoryWidget implements CommandWidget {
-  @JsonIgnore  
+  @JsonIgnore
   private SwitchState state;
   @JsonIgnore
   private CommandSender commandSender;
@@ -53,7 +54,7 @@ public class SwitchWidget extends SensoryWidget implements CommandWidget {
   private String offImageName;
   @JsonIgnore
   private String onImageName;
-  
+
   public ResourceInfo getOffImage() {
     String imageName = getOffImageName();
     if (imageName != null && !imageName.isEmpty() && offImage == null) {
@@ -76,17 +77,18 @@ public class SwitchWidget extends SensoryWidget implements CommandWidget {
     }
     return offImageName;
   }
-  
+
   public String getOnImageName() {
     if (!imageNamesFound) {
       getImageNames();
     }
-    
+
     return onImageName;
   }
-  
+
   private synchronized void getImageNames() {
-    SensorLink link = getSensorLinks() != null && !getSensorLinks().isEmpty() ? getSensorLinks().get(0) : null;
+    SensorLink link = getSensorLinks() != null && !getSensorLinks().isEmpty() ? getSensorLinks()
+            .get(0) : null;
     if (link != null && link.getStates() != null) {
       for (StateMap map : link.getStates()) {
         if (map.getName().equalsIgnoreCase("on")) {
@@ -98,17 +100,17 @@ public class SwitchWidget extends SensoryWidget implements CommandWidget {
     }
     imageNamesFound = true;
   }
-  
+
   @Override
   public void setCommandSender(CommandSender commandSender) {
     this.commandSender = commandSender;
   }
-  
+
   @Override
   public void setValueFailureHandler(ValueSetFailureHandler commandFailureHandler) {
     this.commandFailureHandler = commandFailureHandler;
   }
-  
+
   @Override
   public void onSensorValueChanged(int sensorId, String value) {
     try {
@@ -116,45 +118,45 @@ public class SwitchWidget extends SensoryWidget implements CommandWidget {
       if (this.state == state) {
         return;
       }
-      
+
       SwitchState oldValue = this.state;
-      this.state = state;      
+      this.state = state;
       raisePropertyChanged("state", oldValue, state);
     } catch (IllegalArgumentException e) {
       // Do nothing as this shouldn't happen
     } catch (NullPointerException e) {
-      // Do nothing as this shouldn't happen      
-    }    
+      // Do nothing as this shouldn't happen
+    }
   }
-  
+
   public SwitchState getState() {
     return state;
   }
-  
+
   public void setState(SwitchState state) {
     if (this.state == state) {
       return;
     }
 
     // Wait for on sensor changed callback to actually change the state
-    
-    if (commandSender != null)
-    {
+
+    if (commandSender != null) {
       String data = state.toString().toLowerCase();
-      
-      commandSender.sendControlCommand(new ControlCommand(id, data), new AsyncControllerCallback<ControlCommandResponse>() {
-        @Override
-        public void onSuccess(ControlCommandResponse result) {
-          // Do nothing here
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          if (commandFailureHandler != null) {
-            commandFailureHandler.onSetValueFailed("state", error);
-          }
-        }
-      });
+
+      commandSender.sendControlCommand(new ControlCommand(id, data),
+              new AsyncControllerCallback<ControlCommandResponse>() {
+                @Override
+                public void onSuccess(ControlCommandResponse result) {
+                  // Do nothing here
+                }
+
+                @Override
+                public void onFailure(ControllerResponseCode error) {
+                  if (commandFailureHandler != null) {
+                    commandFailureHandler.onSetValueFailed("state", error);
+                  }
+                }
+              });
     }
   }
 

@@ -24,11 +24,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
 /**
- * Cell layout used inside a grid layout; cell can contain one widget
- * and is positioned within the grid by column, row, columnspan and rowspan
- * properties  
+ * Cell layout used inside a grid layout; cell can contain one widget and is
+ * positioned within the grid by column, row, columnspan and rowspan properties
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class CellLayout implements WidgetContainer {
@@ -51,23 +50,24 @@ public class CellLayout implements WidgetContainer {
   private int rowSpan;
   @JsonProperty("colspan")
   private int colSpan;
-  
+
   public int getX() {
     return x;
   }
-  
+
   public int getY() {
     return y;
   }
-  
+
   public int getRowSpan() {
     return rowSpan;
   }
-  
+
   public int getColSpan() {
     return colSpan;
   }
 
+  @Override
   public Widget getWidget() {
     if (button != null) {
       return button;

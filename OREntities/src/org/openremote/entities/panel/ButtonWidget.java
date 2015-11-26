@@ -20,7 +20,6 @@
  */
 package org.openremote.entities.panel;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -40,31 +39,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
- * Button widget that sends a command on press (behaves differently depending
- * on the {@link Type}); simply change state to trigger the send behaviour.
- * TODO: Implement long press command functionality
+ * Button widget that sends a command on press (behaves differently depending on
+ * the {@link ButtonWidget.Type}); simply change state to trigger the send
+ * behaviour. TODO: Implement long press command functionality
  * <ul>
  * <li>
- * {@value Type#SHORTPRESS} = Send short press command once as soon as state changes to {@value State#PRESSED}
- * </li>
+ * {@link Type#SHORTPRESS} = Send short press command once as soon as state
+ * changes to {@link State#SHORT_PRESSED}</li>
  * <li>
- * {@value Type#SHORTPRESS_REPEATER} = Send short press command repeatedly as soon as state changes to {@value State#PRESSED}
- * repeat period is determined by {@value #repeatDelay}
- * </li>
+ * {@link Type#SHORTPRESS_REPEATER} = Send short press command repeatedly as
+ * soon as state changes to {@link State#SHORT_PRESSED} repeat period is
+ * determined by {@link #getRepeatDelay}</li>
  * <li>
- * {@value Type#LONGPRESS} = Send long press command once after state has been set to {@value State#PRESSED} for
- * longer than {@value #longPressDelay}
- * </li>
+ * {@link Type#LONGPRESS} = Send long press command once after state has been
+ * set to {@link State#LONG_PRESSED} for longer than {link #getLongPressDelay}</li>
  * <li>
- * {@value Type#LONGPRESS_REPEATER} = Send long press command repeatedly after state has been set to {@value State#PRESSED} for
- * longer than {@value #longPressDelay}
- * repeat period is determined by {@value #repeatDelay}
- * </li>
+ * {@link Type#LONGPRESS_REPEATER} = Send long press command repeatedly after
+ * state has been set to {@link State#LONG_PRESSED} for longer than
+ * {@link #getLongPressDelay} repeat period is determined by
+ * {@link #getRepeatDelay}</li>
  * <li>
- * {@value Type#SHORT_AND_LONGPRESS} = Send short press command once as soon as state changes to {@value State#PRESSED} then
- * send long press command after state has been set to {@value State#PRESSED} for longer than {@value #longPressDelay}
- * </li>
+ * {@link Type#SHORT_AND_LONGPRESS} = Send short press command once and as soon
+ * as state changes to {@link State#SHORT_PRESSED} then send long press command
+ * after {@link #getLongPressDelay} delay has passed with changes state to
+ * {@link State#LONG_PRESSED}</li>
  * </ul>
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class ButtonWidget extends Widget implements CommandWidget {
@@ -75,7 +75,7 @@ public class ButtonWidget extends Widget implements CommandWidget {
     LONGPRESS_REPEATER,
     SHORT_AND_LONGPRESS
   }
-  
+
   public enum State {
     SHORT_PRESSED,
     LONG_PRESSED,
@@ -87,7 +87,7 @@ public class ButtonWidget extends Widget implements CommandWidget {
   CellLayout parentCell;
   @JsonBackReference("absolute-button")
   AbsoluteLayout parentAbsolute;
-  
+
   @JsonProperty("navigate")
   @JsonManagedReference("button-navigation")
   private Navigation navigation;
@@ -122,12 +122,11 @@ public class ButtonWidget extends Widget implements CommandWidget {
   private ResourceInfo defaultImage;
   @JsonIgnore
   private ResourceInfo pressedImage;
-  
+
   // GETTERS AND SETTERS
   /**
-   * Set the current state of this button; state can only
-   * be changed for buttons that don't have navigation
-   * associated with them.
+   * Set the current state of this button; state can only be changed for buttons
+   * that don't have navigation associated with them.
    * 
    * @param state
    */
@@ -137,11 +136,11 @@ public class ButtonWidget extends Widget implements CommandWidget {
     if (navigation != null || this.state == state) {
       return;
     }
-    
+
     this.state = state;
-    
+
     // Start or stop timer
-    onStateChanged(state == State.SHORT_PRESSED);   
+    onStateChanged(state == State.SHORT_PRESSED);
   }
 
   @JsonSetter("repeat")
@@ -149,7 +148,7 @@ public class ButtonWidget extends Widget implements CommandWidget {
     switch (getButtonType()) {
     case LONGPRESS:
       if (isRepeater) {
-        setButtonType(Type.LONGPRESS_REPEATER); 
+        setButtonType(Type.LONGPRESS_REPEATER);
       }
       break;
     case LONGPRESS_REPEATER:
@@ -168,10 +167,10 @@ public class ButtonWidget extends Widget implements CommandWidget {
       }
       break;
     default:
-      break;    
+      break;
     }
   }
-  
+
   public void setButtonType(Type buttonType) {
     if (this.buttonType == buttonType) {
       return;
@@ -180,7 +179,7 @@ public class ButtonWidget extends Widget implements CommandWidget {
     this.buttonType = buttonType;
     raisePropertyChanged("buttonType", oldValue, buttonType);
   }
-  
+
   public State getState() {
     return state;
   }
@@ -188,7 +187,7 @@ public class ButtonWidget extends Widget implements CommandWidget {
   public Navigation getNavigation() {
     return navigation;
   }
-  
+
   public boolean hasControlCommand() {
     return hasControlCommand != null && hasControlCommand.booleanValue();
   }
@@ -200,33 +199,33 @@ public class ButtonWidget extends Widget implements CommandWidget {
   private String getPressedImageName() {
     return pressedImageSrc != null ? pressedImageSrc.image.getSrc() : null;
   }
-  
+
   public ResourceInfo getDefaultImage() {
     String imageName = getDefaultImageName();
     if (imageName != null && !imageName.isEmpty() && defaultImage == null) {
       defaultImage = new ResourceInfo(imageName, this);
     }
-    
+
     return defaultImage;
   }
-    
+
   public ResourceInfo getPressedImage() {
     String imageName = getPressedImageName();
     if (imageName != null && !imageName.isEmpty() && pressedImage == null) {
       pressedImage = new ResourceInfo(imageName, this);
     }
-    
+
     return pressedImage;
   }
-  
+
   public int getRepeatDelay() {
     return repeatDelay;
   }
-  
+
   public int getLongPressDelay() {
     return longPressDelay > MIN_LONG_PRESS_DELAY ? longPressDelay : MIN_LONG_PRESS_DELAY;
   }
-  
+
   public Type getButtonType() {
     return buttonType;
   }
@@ -235,11 +234,12 @@ public class ButtonWidget extends Widget implements CommandWidget {
   public boolean isRepeater() {
     return buttonType == Type.LONGPRESS_REPEATER || buttonType == Type.SHORTPRESS_REPEATER;
   }
-  
+
   private boolean isLongPress() {
-    return buttonType == Type.LONGPRESS || buttonType == Type.LONGPRESS_REPEATER || buttonType == Type.SHORT_AND_LONGPRESS;
+    return buttonType == Type.LONGPRESS || buttonType == Type.LONGPRESS_REPEATER
+            || buttonType == Type.SHORT_AND_LONGPRESS;
   }
-  
+
   private void onStateChanged(boolean isPressed) {
     if (!isPressed) {
       if (timer != null) {
@@ -247,7 +247,7 @@ public class ButtonWidget extends Widget implements CommandWidget {
         return;
       }
     }
-    
+
     // Fire command straight away if only short press
     if (!isLongPress()) {
       sendCommand(false);
@@ -256,40 +256,40 @@ public class ButtonWidget extends Widget implements CommandWidget {
     if (isLongPress() || isRepeater()) {
       timer = new Timer();
       int initialWait = isLongPress() ? getLongPressDelay() : getRepeatDelay();
-      
+
       if (timerTask == null) {
         timerTask = new TimerTask() {
           @Override
           public void run() {
             sendCommand(isLongPress());
           }
-        }; 
+        };
       }
-      
+
       timer.schedule(timerTask, initialWait, getRepeatDelay());
-    }   
-  }
-  
-  // TODO: Add support for long press commands
-  private void sendCommand(boolean isLongPress) {
-    if (commandSender != null)
-    {
-      commandSender.sendControlCommand(new ControlCommand(id, SHORT_PRESS_DATA), new AsyncControllerCallback<ControlCommandResponse>() {
-        @Override
-        public void onSuccess(ControlCommandResponse result) {
-          // Do nothing here
-        }
-        
-        @Override
-        public void onFailure(ControllerResponseCode error) {
-          if (commandFailureHandler != null) {
-            commandFailureHandler.onSetValueFailed("state", error);
-          }
-        }
-      });
     }
   }
-  
+
+  // TODO: Add support for long press commands
+  private void sendCommand(boolean isLongPress) {
+    if (commandSender != null) {
+      commandSender.sendControlCommand(new ControlCommand(id, SHORT_PRESS_DATA),
+              new AsyncControllerCallback<ControlCommandResponse>() {
+                @Override
+                public void onSuccess(ControlCommandResponse result) {
+                  // Do nothing here
+                }
+
+                @Override
+                public void onFailure(ControllerResponseCode error) {
+                  if (commandFailureHandler != null) {
+                    commandFailureHandler.onSetValueFailed("state", error);
+                  }
+                }
+              });
+    }
+  }
+
   // OVERRIDES
   @Override
   public void setCommandSender(CommandSender commandSender) {
@@ -304,15 +304,15 @@ public class ButtonWidget extends Widget implements CommandWidget {
   @Override
   public List<ResourceInfo> getResources() {
     List<ResourceInfo> resources = new ArrayList<ResourceInfo>();
-    
+
     if (getDefaultImage() != null) {
       resources.add(getDefaultImage());
     }
-    
+
     if (getPressedImage() != null) {
       resources.add(getPressedImage());
     }
-    
+
     return resources;
   }
 

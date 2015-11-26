@@ -20,15 +20,15 @@
  */
 package org.openremote.entities.controller;
 
-
 /**
  * Response object received from the controller after sending a control command
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 public class ControlCommandResponse extends CommandResponse {
   private int senderId;
-  
+
   public ControlCommandResponse(int senderId, ControllerResponseCode responseCode) {
     super(responseCode);
     this.senderId = senderId;

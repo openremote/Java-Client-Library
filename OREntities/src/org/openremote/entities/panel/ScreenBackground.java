@@ -29,9 +29,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * The background of screen, which contains background position in screen.
- * The position include absolute position and relative position.
- *  
+ * The background of screen, which contains background position in screen. The
+ * position include absolute position and relative position.
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class ScreenBackground implements ResourceConsumer, NotifyPropertyChanged {
@@ -46,7 +46,7 @@ public class ScreenBackground implements ResourceConsumer, NotifyPropertyChanged
     TOP_RIGHT,
     BOTTOM_RIGHT
   };
-  
+
   private Boolean fillScreen;
   @JsonProperty("image")
   ImageResource imageSrc;
@@ -57,11 +57,11 @@ public class ScreenBackground implements ResourceConsumer, NotifyPropertyChanged
   private ResourceInfo image;
   @JsonIgnore
   private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-  
+
   protected void raisePropertyChanged(String propertyName, Object oldValue, Object newValue) {
     pcs.firePropertyChange(propertyName, oldValue, newValue);
   }
-  
+
   @Override
   public void addPropertyChangeListener(PropertyChangeListener listener) {
     pcs.addPropertyChangeListener(listener);
@@ -71,32 +71,32 @@ public class ScreenBackground implements ResourceConsumer, NotifyPropertyChanged
   public void removePropertyChangeListener(PropertyChangeListener listener) {
     pcs.removePropertyChangeListener(listener);
   }
-  
+
   public Boolean getFillScreen() {
     return fillScreen;
   }
-  
+
   String getImageName() {
     return imageSrc != null ? imageSrc.getSrc() : null;
   }
-  
+
   public ResourceInfo getImage() {
     String imageName = getImageName();
-    
+
     if (imageName != null && !imageName.isEmpty() && image == null) {
       image = new ResourceInfo(imageName, this);
     }
     return image;
   }
-  
+
   public Integer getLeft() {
     return left;
   }
-  
+
   public Integer getTop() {
     return top;
   }
-  
+
   public RelativePosition getRelative() {
     return relative;
   }
@@ -107,7 +107,6 @@ public class ScreenBackground implements ResourceConsumer, NotifyPropertyChanged
       raisePropertyChanged("image", image, image);
     }
   }
-
 
   @Override
   public List<ResourceInfo> getResources() {

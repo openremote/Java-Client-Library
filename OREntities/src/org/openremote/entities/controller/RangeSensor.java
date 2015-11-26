@@ -20,23 +20,30 @@
  */
 package org.openremote.entities.controller;
 
+/**
+ * An integer sensor with a customisable min/max value range
+ * 
+ * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
+ * 
+ */
 public class RangeSensor extends Sensor {
   private Integer value;
-  
+
   public RangeSensor() {
     super(SensorType.RANGE);
   }
 
   private int min;
   private int max;
-  
+
   public int getMin() {
     return min;
   }
+
   public int getMax() {
     return max;
   }
-  
+
   public int getValue() {
     if (value == null) {
       value = 0;
@@ -44,13 +51,13 @@ public class RangeSensor extends Sensor {
         value = Integer.parseInt(super.getStringValue());
         value = Math.min(getMax(), value);
         value = Math.max(getMin(), value);
-      } catch(NumberFormatException e) {
+      } catch (NumberFormatException e) {
         // Do nothing as this really shouldn't happen anyway
       }
     }
     return value;
   }
-  
+
   @Override
   protected void onValueChanged() {
     int oldValue = value;

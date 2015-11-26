@@ -27,15 +27,16 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * This class is only for Jackson as it doesn't support the equivalent
- * of XmlElementWrapper
+ * This class is only for Jackson as it doesn't support the equivalent of
+ * XmlElementWrapper
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
- *
+ * 
  */
 class ScreenList {
   @JsonBackReference("panel-screenlist")
   Panel parentPanel;
-  
+
   @JsonProperty("screen")
   @JsonManagedReference("screenlist-screen")
   List<Screen> screens;

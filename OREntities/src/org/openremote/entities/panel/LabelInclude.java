@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Used for marshalling to/from JSON
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 class LabelInclude {
@@ -32,19 +33,19 @@ class LabelInclude {
   LabelWidget label;
   @JsonProperty("ref")
   int labelRef;
-	private String type = "label";
-  
+  private String type = "label";
+
   LabelWidget getLabel() {
     return label;
   }
-  
+
   String getType() {
     return type;
   }
-  
+
   LabelInclude() {
   }
-  
+
   LabelInclude(LabelWidget label) {
     this.label = label;
   }

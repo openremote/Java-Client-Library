@@ -29,9 +29,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Screen object that contains layouts and supports gestures
- *  
+ * 
  * @author <a href="mailto:richard@openremote.org">Richard Turner</a>
  */
 public class Screen {
@@ -55,19 +56,20 @@ public class Screen {
   private Boolean landscape;
   @JsonIgnore
   private Screen inverseScreen;
-  
+
   public String getName() {
     return name;
   }
-    
+
   @SuppressWarnings("unchecked")
   public <T extends Widget> List<T> getWidgets(Class<T> type) {
-    return (List<T>)getWidgets(new Class<?>[] {type});
+    return (List<T>) getWidgets(new Class<?>[] { type });
   }
-  
+
   public List<Widget> getWidgets() {
-    return getWidgets(new Class[] {Widget.class});
+    return getWidgets(new Class[] { Widget.class });
   }
+
   public List<Widget> getWidgets(Class<?>[] widgetTypes) {
     List<Widget> widgets = new ArrayList<Widget>();
     if (absoluteLayouts != null) {
@@ -85,7 +87,7 @@ public class Screen {
         }
       }
     }
-    
+
     if (gridLayouts != null) {
       for (GridLayout grid : gridLayouts) {
         for (CellLayout cell : grid.getCells()) {
@@ -110,25 +112,25 @@ public class Screen {
   public List<AbsoluteLayout> getAbsoluteLayouts() {
     return absoluteLayouts;
   }
-  
+
   @JsonManagedReference("screen-grid")
   public List<GridLayout> getGridLayouts() {
     return gridLayouts;
   }
-  
+
   @JsonManagedReference("screen-gesture")
   public List<Gesture> getGestures() {
     return gestures;
   }
-  
+
   public ScreenBackground getBackground() {
     return background;
   }
-  
+
   public boolean isLandscape() {
     return landscape != null && landscape.booleanValue();
   }
-  
+
   public Screen getInverseScreen() {
     if (inverseScreenId != null && parentGroup != null && inverseScreen == null) {
       for (Screen screen : parentGroup.getScreens()) {
@@ -138,7 +140,7 @@ public class Screen {
         }
       }
     }
-    
+
     return inverseScreen;
   }
 }
