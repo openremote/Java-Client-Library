@@ -44,6 +44,11 @@ public enum ControllerResponseCode {
 	XML_CHANGED (506, "Controller XML has Changed"),
 	INVALID_URL (996, "Controller URL is null or invalid"),
 	XML_JSON_PARSING_ERROR (520, "XML to JSON Parsing Error"),
+	DEVICE_NULL (992, "Supplied device is null"),
+	PANEL_NULL (993, "Supplied panel is null"),
+	ALREADY_REGISTERED (994, "Device or Panel already registered"),
+	UNREGISTERED (995, "Device or Panel unregistered"),
+	DISCONNECTED (996, "Controller was disconnected"),
 	RESOURCE_NAME_INVALID (997, "Resource name is null or empty"),
 	RESOURCE_LOCATOR_NULL (998, "Resource Locator is not defined"),
 	UNKNOWN_ERROR (999, "Unkown Controller Error");	

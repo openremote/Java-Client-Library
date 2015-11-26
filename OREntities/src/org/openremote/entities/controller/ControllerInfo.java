@@ -67,11 +67,11 @@ public final class ControllerInfo {
   }
 
   public String getName() {
-    return name;
+    return name != null ? name : "";
   }
 
   public String getVersion() {
-    return version;
+    return version != null ? version : "";
   }
 
   public String getUrl() {
@@ -79,6 +79,6 @@ public final class ControllerInfo {
   }
   
   public String getIdentity() {
-    return identity;
+    return identity != null ? identity : "";
   }
 }

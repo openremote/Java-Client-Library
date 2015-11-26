@@ -28,23 +28,28 @@ package org.openremote.entities.controller;
  */
 public interface CommandSender {
   /**
-   * Try and send the specified control command asynchronously
+   * Returns {@link Boolean} indicating whether control command send request was
+   * successful.
+   * 
    * @param command
+   *          Control Command to send
    * @param callback
+   *          {@link AsyncControllerCallback} callback for handling the response
+   *          asynchronously
    */
-  public void sendControlCommand(ControlCommand command, AsyncControllerCallback<ControlCommandResponse> callback);
-
-  /**
-   * Try and send the specified device command asynchronously
-   * @param command
-   * @param parameter
-   * @param callback
-   */
-  public void sendCommand(Command command, String parameter, AsyncControllerCallback<CommandResponse> callback);
+  void sendControlCommand(ControlCommand command, AsyncControllerCallback<ControlCommandResponse> callback);
   
   /**
-   * Sets the timeout in milliseconds for attempting to send a command
-   * @param timeout
+   * Returns {@link Boolean} indicating whether command send request was
+   * successful.
+   * 
+   * @param command
+   *          Command to send
+   * @param parameter
+   *          Command parameter for use with ${param} dynamic command values
+   * @param callback
+   *          {@link AsyncControllerCallback} callback for handling the response
+   *          asynchronously
    */
-  public void setTimeout(int timeout);
+  void sendCommand(Command command, String parameter, AsyncControllerCallback<CommandResponse> callback);
 }

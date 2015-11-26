@@ -39,12 +39,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  */
 public class Device {
+  private int id;
   private String name;
   @JsonManagedReference("device-command")
-  @JsonProperty("command")
   private List<Command> commands;
   @JsonManagedReference("device-sensor")
-  @JsonProperty("sensor")
   private List<Sensor> sensors;
   @JsonIgnore
   private CommandSender commandSender;

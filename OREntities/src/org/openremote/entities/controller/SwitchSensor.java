@@ -20,7 +20,9 @@ public class SwitchSensor extends Sensor {
   @Override
   protected void onValueChanged() {
     SwitchState oldValue = value;
-    value = null;
-    raisePropertyChanged("value", oldValue, getValue());
+    String valStr = super.getStringValue();
+    boolean bValue = valStr == null ? false : valStr.equalsIgnoreCase("on") || valStr.equalsIgnoreCase("1") || Boolean.parseBoolean(valStr);
+    value = bValue ? SwitchState.ON :SwitchState.OFF;
+    raisePropertyChanged("value", oldValue, value);
   }
 }

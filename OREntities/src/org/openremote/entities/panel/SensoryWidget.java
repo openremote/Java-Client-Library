@@ -64,7 +64,7 @@ public abstract class SensoryWidget extends Widget {
     for (SensorLink link : getSensorLinks()) {
       if (link.getRef() == sensorId && link.getStates() != null) {
         for (StateMap map : link.getStates()) {
-          if (map.getName().equalsIgnoreCase(value)) {
+          if (map.getName() != null && map.getName().equalsIgnoreCase(value)) {
             matchedMap = map;
             break;
           }
