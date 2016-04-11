@@ -60,7 +60,7 @@ public class RangeSensor extends Sensor {
 
   @Override
   protected void onValueChanged() {
-    int oldValue = value;
+    int oldValue = value == null ? 0 : value;
     value = null;
     raisePropertyChanged("value", oldValue, getValue());
   }

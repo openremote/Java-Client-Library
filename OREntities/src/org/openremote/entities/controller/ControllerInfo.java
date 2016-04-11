@@ -30,31 +30,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public final class ControllerInfo {
   @JsonProperty("controllerName")
-  private String name;
+  protected String name;
   @JsonProperty("version")
-  private String version;
+  protected String version;
   @JsonProperty("controllerURL")
-  private String url;
+  protected String url;
   @JsonProperty("controllerIdentity")
-  private String identity;
+  protected String identity;
 
-  void setName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
-  void setVersion(String version) {
+  public void setVersion(String version) {
     this.version = version;
   }
 
-  void setUrl(String url) {
+  public void setUrl(String url) {
     this.url = url;
   }
 
-  void setIdentity(String identity) {
+  public void setIdentity(String identity) {
     this.identity = identity;
   }
 
-  ControllerInfo() {
+  public ControllerInfo() {
   }
 
   public ControllerInfo(String url) {

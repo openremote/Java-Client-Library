@@ -105,7 +105,7 @@ public abstract class Sensor implements NotifyPropertyChanged {
 
   protected abstract void onValueChanged();
 
-  Command getCommand() {
+  public Command getCommand() {
     if (command == null && device != null && device.getCommands() != null) {
       for (Command command : device.getCommands()) {
         if (command.getId() == command_id) {

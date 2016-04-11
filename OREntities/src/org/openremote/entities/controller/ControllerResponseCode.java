@@ -46,6 +46,7 @@ public enum ControllerResponseCode {
   XML_CHANGED(506, "Controller XML has Changed"),
   INVALID_URL(996, "Controller URL is null or invalid"),
   XML_JSON_PARSING_ERROR(520, "XML to JSON Parsing Error"),
+  NOT_SUPPORTED(991, "Command not supported"),
   DEVICE_NULL(992, "Supplied device is null"),
   PANEL_NULL(993, "Supplied panel is null"),
   ALREADY_REGISTERED(994, "Device or Panel already registered"),
