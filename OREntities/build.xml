@@ -37,7 +37,8 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 	<property name="build.dir" value="bin"/>
 	<property name="output.dir" value="output"/>
 	<property name="jar.name" value="${project.name}-${version}.jar"/>
-	
+	<property name="jar.sources.name" value="${project.name}-${version}-sources.jar"/>
+
 	<path id="project.class.path">
 		<pathelement location="${build.dir}"/>
 		<pathelement location="${lib.dir}/jackson/jackson-annotations-2.3.2.jar"/>
@@ -85,5 +86,6 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 		<echo message="--------------------------------------------------------------------" />
 		<echo message="" />
 		<jar destfile="${output.dir}/${jar.name}" basedir="${build.dir}" />
+        <jar destfile="${output.dir}/${jar.sources.name}" basedir="${src.dir}" />
 	</target>
 </project>

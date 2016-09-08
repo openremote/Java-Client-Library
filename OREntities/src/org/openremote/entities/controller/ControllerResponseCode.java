@@ -27,6 +27,7 @@ package org.openremote.entities.controller;
  */
 public enum ControllerResponseCode {
   OK(200, "OK"),
+  NO_CONTENT(204, "No Content"),
   BAD_COMMAND(400, "Invalid Command Request"),
   NOT_AUTHORIZED(401, "Please login"),
   FORBIDDEN(403, "Access Denied"),
